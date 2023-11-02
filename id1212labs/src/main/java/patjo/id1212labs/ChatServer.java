@@ -14,7 +14,7 @@ public class ChatServer {
     public ChatServer(){
         try {
             serverSocket = new ServerSocket(5555);
-            System.out.println("Server listen on port 5555 ...");
+
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,14 +24,15 @@ public class ChatServer {
     }
      
     public void listenForClient(){
-    
         while(true){
             try {
+                System.out.println("Server listen on port 5555 ...");
                 Socket socket = serverSocket.accept(); 
                 System.out.println("New client connected " + socket + " ");
-                ClientHandler clientHandler = new ClientHandler(socket);
+                //ClientHandler clientHandler = new ClientHandler(socket);
         
-                Thread thread = new Thread(clientHandler);
+                //Thread thread = new Thread(clientHandler);
+                //thread.start();
                 
             } catch (Exception e) {
                 e.printStackTrace();
