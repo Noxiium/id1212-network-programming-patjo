@@ -19,6 +19,7 @@ public class ClientHandler implements Runnable {
     BufferedWriter bw;
     InputStreamReader inputStreamReader;
     OutputStreamWriter outputStreamWriter;
+    int userID;
  
     //Creates an instance of ClientHandler and saves a new ChatClient in an ArrayList.
     public ClientHandler(Socket socket) {
@@ -28,7 +29,9 @@ public class ClientHandler implements Runnable {
             this.br = new BufferedReader(inputStreamReader);
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
+            this.userID = socket.getPort();
             clientHandlers.add(this);
+            sendToAll("User " + socket.getPort() + " joined");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,40 +40,46 @@ public class ClientHandler implements Runnable {
     //Listens to messages from a ChatClient and broadcasts them to all ChatClients in the ArrayList.
     @Override
     public void run() {
-        while (socket.isConnected()) {
-            try {
+        try {
+            while (socket.isConnected()) {
                 String msg = br.readLine();
                 sendToAll(msg);
+            }
+        } catch (Exception e) {
+            closeAll(socket, br, bw);
+            sendToAll("User " + this.userID + " left the chat");
+        }
+    }
+
+    public synchronized void sendToAll(String msg) {
+        for (ClientHandler client : clientHandlers) {
+            try {
+                if (this.userID != client.userID) {
+                    client.bw.write(msg);
+                    client.bw.newLine();
+                    client.bw.flush();
+                }
             } catch (Exception e) {
                 closeAll(socket, br, bw);
             }
         }
     }
 
-    public void sendToAll(String msg) {
-        for (ClientHandler client : clientHandlers) {
-            try {
-                client.bw.write(msg);
-                client.bw.newLine();
-                client.bw.flush();
-            } catch (Exception e) {
-                closeAll(socket, br, bw);
-            }
-        }
-    }
 
     //Close socket, BufferedReader,BufferedWriter and remove ChatClient from the ArrayList.
     public void closeAll(Socket socket, BufferedReader br, BufferedWriter bw) {
         clientHandlers.remove(this);
-        
+
         try {
-            socket.close();
-            br.close();
-            bw.close();
+            if (socket != null)
+                socket.close();
+            if (br != null)
+                br.close();
+            if (bw != null)
+                bw.close();
 
         } catch (Exception e) {
-            closeAll(socket, br, bw);
+            e.printStackTrace();
         }
     }
 }
-

@@ -27,8 +27,10 @@ public class ChatServer {
         }
     }
 
+
     //Listens for incoming client connections on port 5555 
     //Creates a new ClientHandler thread for each connected client.
+
     public void listenForClient() throws Exception {
 
         while (true) {
@@ -51,4 +53,3 @@ public class ChatServer {
         }
     }
 }
-

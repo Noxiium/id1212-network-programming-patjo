@@ -30,10 +30,10 @@ public class ChatClient extends Thread {
             this.br = new BufferedReader(inputStreamReader);
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
-            
+          
         } catch (Exception e) {
-            System.out.println("Exception in Chatclient(), stacktrace: ");
-            e.printStackTrace();
+            System.out.println("Host is down, try again later");
+            System.exit(0);
         }
 
     }
@@ -44,18 +44,15 @@ public class ChatClient extends Thread {
             System.out.println("Write a message:");
             Scanner scanner = new Scanner(System.in);
 
-            while (socket.isConnected()) {
+            while (true) {
                 String msg = scanner.nextLine();
-
-                bw.write(socket.getLocalPort() + ":" + msg);
+                bw.write(socket.getLocalPort() + ": " + msg);
                 bw.newLine();
                 bw.flush();
             }
         } catch (Exception e) {
-
             closeAllResources(this.socket, this.br, this.bw);
-            System.out.println("Exception in run(), stacktrace: ");
-            e.printStackTrace();
+            System.out.println("Scanner or socket error.");
         }
     }
 
@@ -64,12 +61,12 @@ public class ChatClient extends Thread {
     public void listenForMessage() {
 
         try {
-            while (socket.isConnected()) {
+            while (true) {
                 String receivedMsg = br.readLine();
                 if (receivedMsg.equals(null)) {
-                    closeAllResources(this.socket, this.br, this.bw);
-                    System.out.println("Server is down exiting patjo-chat");
-                    System.exit(0);
+
+                    throw new Exception();
+
                 }
                 System.out.println(receivedMsg);
 
@@ -101,6 +98,7 @@ public class ChatClient extends Thread {
     }
 
     //Creates an instance of ChatClient and starts two threads.
+
     public static void main(String[] args) {
 
         ChatClient chatClient = new ChatClient();
