@@ -61,13 +61,18 @@ public class ChatClient extends Thread {
         try {
             while (socket.isConnected()) {
                 String receivedMsg = br.readLine();
+                if(receivedMsg.equals(null)){
+                    closeAllResources(this.socket, this.br, this.bw);
+                    System.out.println("Server is down exiting patjo-chat");
+                    System.exit(0);
+                }
                 System.out.println(receivedMsg);
 
             }
         } catch (Exception e) {
             closeAllResources(this.socket, this.br, this.bw);
             System.out.println("Server is down exiting patjo-chat");
-            System.exit(400);
+            System.exit(0);
         }
     }
 
