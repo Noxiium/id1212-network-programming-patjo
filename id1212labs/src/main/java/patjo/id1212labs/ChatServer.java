@@ -23,7 +23,6 @@ public class ChatServer {
         }
     }
 
-
     public void listenForClient() throws Exception {
 
         while (true) {
@@ -46,4 +45,3 @@ public class ChatServer {
         }
     }
 }
-

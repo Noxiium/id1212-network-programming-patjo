@@ -18,7 +18,7 @@ public class ClientHandler implements Runnable {
     BufferedWriter bw;
     InputStreamReader inputStreamReader;
     OutputStreamWriter outputStreamWriter;
- 
+    int userID;
 
     public ClientHandler(Socket socket) {
         try {
@@ -27,7 +27,9 @@ public class ClientHandler implements Runnable {
             this.br = new BufferedReader(inputStreamReader);
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
+            this.userID = socket.getPort();
             clientHandlers.add(this);
+            sendToAll("User " + socket.getPort() + " joined");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,17 +37,18 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        while (socket.isConnected()) {
-            try {
+        try {
+            while (socket.isConnected()) {
                 String msg = br.readLine();
                 sendToAll(msg);
-            } catch (Exception e) {
-                closeAll(socket, br, bw);
             }
+        } catch (Exception e) {
+            closeAll(socket, br, bw);
+            sendToAll("User " + this.userID + " left the chat");
         }
     }
 
-    public void sendToAll(String msg) {
+    public synchronized void sendToAll(String msg) {
         for (ClientHandler client : clientHandlers) {
             try {
                 client.bw.write(msg);
@@ -57,21 +60,18 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void removeClientFromClientHandlers() {
-        clientHandlers.remove(this);
-
-    }
-
     public void closeAll(Socket socket, BufferedReader br, BufferedWriter bw) {
-        removeClientFromClientHandlers();
+        clientHandlers.remove(this);
         try {
-            socket.close();
-            br.close();
-            bw.close();
+            if (socket != null)
+                socket.close();
+            if (br != null)
+                br.close();
+            if (bw != null)
+                bw.close();
 
         } catch (Exception e) {
-            closeAll(socket, br, bw);
+            e.printStackTrace();
         }
     }
 }
-

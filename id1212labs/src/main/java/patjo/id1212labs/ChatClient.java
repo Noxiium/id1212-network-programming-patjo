@@ -28,10 +28,9 @@ public class ChatClient extends Thread {
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
 
-            System.out.println("-- Welcome to the chat --");
         } catch (Exception e) {
-            System.out.println("Exception in Chatclient(), stacktrace: ");
-            e.printStackTrace();
+            System.out.println("Host is down, try again later");
+            System.exit(0);
         }
 
     }
@@ -41,30 +40,25 @@ public class ChatClient extends Thread {
             System.out.println("Write a message:");
             Scanner scanner = new Scanner(System.in);
 
-            while (socket.isConnected()) {
+            while (true) {
                 String msg = scanner.nextLine();
-
-                bw.write(socket.getLocalPort() + ":" + msg);
+                bw.write(socket.getLocalPort() + ": " + msg);
                 bw.newLine();
                 bw.flush();
             }
         } catch (Exception e) {
-
             closeAllResources(this.socket, this.br, this.bw);
-            System.out.println("Exception in run(), stacktrace: ");
-            e.printStackTrace();
+            System.out.println("Scanner or socket error.");
         }
     }
 
     public void listenForMessage() {
 
         try {
-            while (socket.isConnected()) {
+            while (true) {
                 String receivedMsg = br.readLine();
-                if(receivedMsg.equals(null)){
-                    closeAllResources(this.socket, this.br, this.bw);
-                    System.out.println("Server is down exiting patjo-chat");
-                    System.exit(0);
+                if (receivedMsg.equals(null)) {
+                    throw new Exception();
                 }
                 System.out.println(receivedMsg);
 
@@ -91,10 +85,7 @@ public class ChatClient extends Thread {
         }
     }
 
-    public void printExitMessage() {
-        System.out.println("Bye bye!");
-    }
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
         ChatClient chatClient = new ChatClient();
 
@@ -104,7 +95,6 @@ public static void main(String[] args) {
         thread1.start();
         thread2.start();
 
-    }    
+    }
 
 }
-
