@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author patricialagerhult
+ * @author patricialagerhult and johansellerfredlund
  */
 public class ClientHandler implements Runnable {
     static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -73,3 +73,4 @@ public class ClientHandler implements Runnable {
         }
     }
 }
+
