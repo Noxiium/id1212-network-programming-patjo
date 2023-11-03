@@ -8,7 +8,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- *
+ * ClientHandler class handles all connected ChatClients in the chat application.
+ * Listens to messages from ChatClients and broadcasts them to all connected ChatClients.
  * @author patricialagerhult and johansellerfredlund
  */
 public class ClientHandler implements Runnable {
@@ -19,7 +20,7 @@ public class ClientHandler implements Runnable {
     InputStreamReader inputStreamReader;
     OutputStreamWriter outputStreamWriter;
  
-
+    //Creates an instance of ClientHandler and saves a new ChatClient in an ArrayList.
     public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
@@ -33,6 +34,7 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    //Listens to messages from a ChatClient and broadcasts them to all ChatClients in the ArrayList.
     @Override
     public void run() {
         while (socket.isConnected()) {
@@ -57,13 +59,10 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void removeClientFromClientHandlers() {
-        clientHandlers.remove(this);
-
-    }
-
+    //Close socket, BufferedReader,BufferedWriter and remove ChatClient from the ArrayList.
     public void closeAll(Socket socket, BufferedReader br, BufferedWriter bw) {
-        removeClientFromClientHandlers();
+        clientHandlers.remove(this);
+        
         try {
             socket.close();
             br.close();
