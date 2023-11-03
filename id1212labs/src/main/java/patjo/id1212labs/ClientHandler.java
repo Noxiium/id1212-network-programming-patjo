@@ -29,7 +29,10 @@ public class ClientHandler implements Runnable {
             this.bw = new BufferedWriter(outputStreamWriter);
             this.userID = socket.getPort();
             clientHandlers.add(this);
-            sendToAll("User " + socket.getPort() + " joined");
+            sendToAll("User " + socket.getPort() + " joined", true);
+            bw.write("-- Welcome to the Chat --");
+            bw.newLine();
+            bw.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,18 +43,18 @@ public class ClientHandler implements Runnable {
         try {
             while (socket.isConnected()) {
                 String msg = br.readLine();
-                sendToAll(msg);
+                sendToAll(msg, false);
             }
         } catch (Exception e) {
             closeAll(socket, br, bw);
-            sendToAll("User " + this.userID + " left the chat");
+            sendToAll("User " + this.userID + " left the chat", true);
         }
     }
 
-    public synchronized void sendToAll(String msg) {
+    public synchronized void sendToAll(String msg, boolean flag) {
         for (ClientHandler client : clientHandlers) {
             try {
-                if (this.userID != client.userID) {
+                if (this.userID != client.userID || flag) {
                     client.bw.write(msg);
                     client.bw.newLine();
                     client.bw.flush();

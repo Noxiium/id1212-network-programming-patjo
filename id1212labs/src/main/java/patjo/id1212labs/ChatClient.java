@@ -37,12 +37,11 @@ public class ChatClient extends Thread {
 
     public void writeMessage() {
         try {
-            System.out.println("Write a message:");
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
                 String msg = scanner.nextLine();
-                bw.write(socket.getLocalPort() + ": " + msg);
+                bw.write("<" + socket.getLocalPort() + ">: " + msg);
                 bw.newLine();
                 bw.flush();
             }
