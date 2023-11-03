@@ -12,6 +12,7 @@ import java.util.Scanner;
  * @author patricialagerhult & johansellerfredlund
  */
 public class ChatClient extends Thread {
+    int serverPort = 5555;
     Socket socket;
     BufferedReader br;
     BufferedWriter bw;
@@ -20,12 +21,14 @@ public class ChatClient extends Thread {
 
     public ChatClient() {
         try {
-            this.socket = new Socket("localhost", 5555);
+
+            this.socket = new Socket("localhost", serverPort);
             this.inputStreamReader = new InputStreamReader(socket.getInputStream());
             this.br = new BufferedReader(inputStreamReader);
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
 
+            System.out.println("-- Welcome to the chat --");
         } catch (Exception e) {
             System.out.println("Exception in Chatclient(), stacktrace: ");
             e.printStackTrace();
@@ -33,32 +36,30 @@ public class ChatClient extends Thread {
 
     }
 
-    // sendMessage
-    @Override
-    public void run() {
+    public void writeMessage() {
         try {
             System.out.println("Write a message:");
             Scanner scanner = new Scanner(System.in);
 
             while (socket.isConnected()) {
                 String msg = scanner.nextLine();
-                bw.write(msg);
+
+                bw.write(socket.getLocalPort() + ":" + msg);
                 bw.newLine();
                 bw.flush();
             }
         } catch (Exception e) {
+
             closeAllResources(this.socket, this.br, this.bw);
             System.out.println("Exception in run(), stacktrace: ");
             e.printStackTrace();
         }
-
     }
 
     public void listenForMessage() {
 
         try {
             while (socket.isConnected()) {
-
                 String receivedMsg = br.readLine();
                 System.out.println(receivedMsg);
 
@@ -88,11 +89,17 @@ public class ChatClient extends Thread {
     public void printExitMessage() {
         System.out.println("Bye bye!");
     }
+public static void main(String[] args) {
 
-    public static void main(String[] args) {
         ChatClient chatClient = new ChatClient();
-        chatClient.start();
-        chatClient.listenForMessage();
-    }
+
+        Thread thread1 = new Thread(() -> chatClient.writeMessage());
+        Thread thread2 = new Thread(() -> chatClient.listenForMessage());
+
+        thread1.start();
+        thread2.start();
+
+    }    
 
 }
+
