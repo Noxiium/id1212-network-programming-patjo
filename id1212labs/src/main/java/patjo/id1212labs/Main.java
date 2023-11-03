@@ -1,4 +1,3 @@
-
 package patjo.id1212labs;
 
 /**
@@ -8,9 +7,12 @@ package patjo.id1212labs;
 public class Main {
 
     public static void main(String[] args) {
-        ChatServer chatServer = new ChatServer();
-        chatServer.listenForClient();
-        
-        
+        try {
+            ChatServer chatServer = new ChatServer();
+            chatServer.listenForClient();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
