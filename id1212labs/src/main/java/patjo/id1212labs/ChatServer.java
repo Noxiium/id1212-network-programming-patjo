@@ -23,7 +23,9 @@ public class ChatServer {
         }
     }
 
+
     public void listenForClient() throws Exception {
+
         while (true) {
             try {
                 System.out.println("Server listen on port 5555 ...");
@@ -35,7 +37,6 @@ public class ChatServer {
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
-                
 
             } catch (Exception e) {
                 serverSocket.close();
@@ -44,5 +45,5 @@ public class ChatServer {
 
         }
     }
-
 }
+

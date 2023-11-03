@@ -12,7 +12,6 @@ import java.util.Scanner;
  * @author patricialagerhult & johansellerfredlund
  */
 public class ChatClient extends Thread {
-
     int serverPort = 5555;
     Socket socket;
     BufferedReader br;
@@ -22,19 +21,21 @@ public class ChatClient extends Thread {
 
     public ChatClient() {
         try {
+
             this.socket = new Socket("localhost", serverPort);
             this.inputStreamReader = new InputStreamReader(socket.getInputStream());
             this.br = new BufferedReader(inputStreamReader);
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
-            System.out.println("-- Welcome to the chat --");
 
+            System.out.println("-- Welcome to the chat --");
         } catch (Exception e) {
+            System.out.println("Exception in Chatclient(), stacktrace: ");
             e.printStackTrace();
         }
 
     }
- 
+
     public void writeMessage() {
         try {
             System.out.println("Write a message:");
@@ -42,11 +43,15 @@ public class ChatClient extends Thread {
 
             while (socket.isConnected()) {
                 String msg = scanner.nextLine();
+
                 bw.write(socket.getLocalPort() + ":" + msg);
                 bw.newLine();
                 bw.flush();
             }
         } catch (Exception e) {
+
+            closeAllResources(this.socket, this.br, this.bw);
+            System.out.println("Exception in run(), stacktrace: ");
             e.printStackTrace();
         }
     }
@@ -57,13 +62,34 @@ public class ChatClient extends Thread {
             while (socket.isConnected()) {
                 String receivedMsg = br.readLine();
                 System.out.println(receivedMsg);
+
             }
         } catch (Exception e) {
+            closeAllResources(this.socket, this.br, this.bw);
+            System.out.println("Server is down exiting patjo-chat");
+            System.exit(400);
+        }
+    }
+
+    public void closeAllResources(Socket socket, BufferedReader br, BufferedWriter bw) {
+        try {
+            if (socket != null)
+                socket.close();
+            if (br != null)
+                br.close();
+            if (bw != null)
+                bw.close();
+
+        } catch (Exception e) {
+            System.out.println("Exception in closeAllResources(), stacktrace: ");
             e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
+    public void printExitMessage() {
+        System.out.println("Bye bye!");
+    }
+public static void main(String[] args) {
 
         ChatClient chatClient = new ChatClient();
 
@@ -73,6 +99,7 @@ public class ChatClient extends Thread {
         thread1.start();
         thread2.start();
 
-    }
+    }    
 
 }
+

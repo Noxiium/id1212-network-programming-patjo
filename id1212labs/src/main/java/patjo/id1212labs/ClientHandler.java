@@ -9,41 +9,38 @@ import java.util.ArrayList;
 
 /**
  *
- * @author patricialagerhult & johansellerfredlund
+ * @author patricialagerhult and johansellerfredlund
  */
 public class ClientHandler implements Runnable {
-
-    Socket clientSocket;
+    static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+    Socket socket;
     BufferedReader br;
     BufferedWriter bw;
     InputStreamReader inputStreamReader;
     OutputStreamWriter outputStreamWriter;
-    static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+ 
 
-    public ClientHandler(Socket clientSocket) {
+    public ClientHandler(Socket socket) {
         try {
-            System.out.println(clientSocket);
-            this.clientSocket = clientSocket;
-            this.inputStreamReader = new InputStreamReader(clientSocket.getInputStream());
+            this.socket = socket;
+            this.inputStreamReader = new InputStreamReader(socket.getInputStream());
             this.br = new BufferedReader(inputStreamReader);
-            this.outputStreamWriter = new OutputStreamWriter(clientSocket.getOutputStream());
+            this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
             clientHandlers.add(this);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void run() {
-        while (clientSocket.isConnected()) {
+        while (socket.isConnected()) {
             try {
                 String msg = br.readLine();
                 sendToAll(msg);
             } catch (Exception e) {
-                closeAll(clientSocket, br, bw);
+                closeAll(socket, br, bw);
             }
         }
     }
@@ -54,9 +51,8 @@ public class ClientHandler implements Runnable {
                 client.bw.write(msg);
                 client.bw.newLine();
                 client.bw.flush();
-
             } catch (Exception e) {
-                closeAll(clientSocket, br, bw);
+                closeAll(socket, br, bw);
             }
         }
     }
@@ -69,12 +65,13 @@ public class ClientHandler implements Runnable {
     public void closeAll(Socket socket, BufferedReader br, BufferedWriter bw) {
         removeClientFromClientHandlers();
         try {
-            clientSocket.close();
+            socket.close();
             br.close();
             bw.close();
 
         } catch (Exception e) {
-            closeAll(clientSocket, br, bw);
+            closeAll(socket, br, bw);
         }
     }
 }
+
