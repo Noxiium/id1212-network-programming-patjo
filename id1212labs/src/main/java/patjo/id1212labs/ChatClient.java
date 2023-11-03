@@ -27,6 +27,7 @@ public class ChatClient extends Thread {
             this.br = new BufferedReader(inputStreamReader);
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
+            System.out.println("-- Welcome to the chat --");
 
         } catch (Exception e) {
             e.printStackTrace();
