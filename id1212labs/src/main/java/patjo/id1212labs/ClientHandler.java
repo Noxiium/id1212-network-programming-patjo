@@ -51,9 +51,11 @@ public class ClientHandler implements Runnable {
     public synchronized void sendToAll(String msg) {
         for (ClientHandler client : clientHandlers) {
             try {
-                client.bw.write(msg);
-                client.bw.newLine();
-                client.bw.flush();
+                if (this.userID != client.userID) {
+                    client.bw.write(msg);
+                    client.bw.newLine();
+                    client.bw.flush();
+                }
             } catch (Exception e) {
                 closeAll(socket, br, bw);
             }
