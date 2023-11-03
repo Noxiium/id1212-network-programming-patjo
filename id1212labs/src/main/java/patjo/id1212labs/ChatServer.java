@@ -9,8 +9,35 @@ import java.net.Socket;
  * @author patricialagerhult & johansellerfredlund
  */
 public class ChatServer {
-    ServerSocket serverSocket;
     
+    public ChatServer() {
+        try {
+            serverSocket = new ServerSocket(5555);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void listenForClient() {
+        while (true) {
+            try {
+                System.out.println("Server listen on port 5555 ...");
+                Socket socket = serverSocket.accept();
+                System.out.println("New client connected " + socket + " ");
+                ClientHandler clientHandler = new ClientHandler(socket);
+
+                Thread thread = new Thread(clientHandler);
+                thread.start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+}
     public ChatServer(){
         try {
             serverSocket = new ServerSocket(5555);
