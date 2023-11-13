@@ -1,4 +1,3 @@
-/id1212labs/target/
-/id1212labs/pom.xml
+**/pom.xml
 **/target/
 **/.DS_Store
