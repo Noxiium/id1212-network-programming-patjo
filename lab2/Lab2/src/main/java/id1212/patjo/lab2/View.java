@@ -17,11 +17,24 @@ public class View {
     PrintStream response;
 
     public View(Socket socket) {
-        request = new BufferedReader(inputStreamReader(socket.getInputStream()));
-        response = new PrintStream(socket.getOutputStream());
-        String str = request.readLine();
-        while ((str = request.readLine()) != null && str.length() > 0) {
+        
+        try {
+            
+            this. inputStreamReader = new InputStreamReader(socket.getInputStream());
+            this.request = new BufferedReader(inputStreamReader);
+            this.response = new PrintStream(socket.getOutputStream());
+            String str = request.readLine();
+            while ((str = request.readLine()) != null && str.length() > 0) {
             System.out.println(str);
         }
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+        
+        
+    }
+    
+    public String generateHTTPResponse(Boolean answer, int numberOfGuessesLeft){
+       return null; 
     }
 }
