@@ -4,6 +4,7 @@ package patjo.id1212labs;
  *
  * Main class for the ChatServer application.
  * Creates an instance of ChatServer.
+ * 
  * @author PC
  */
 public class Main {

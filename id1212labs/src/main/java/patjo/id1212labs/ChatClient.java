@@ -22,7 +22,7 @@ public class ChatClient extends Thread {
     InputStreamReader inputStreamReader;
     OutputStreamWriter outputStreamWriter;
 
-    //Creates a new instance of ChatClient 
+    // Creates a new instance of ChatClient
     public ChatClient() {
         try {
             this.socket = new Socket("localhost", serverPort);
@@ -30,7 +30,7 @@ public class ChatClient extends Thread {
             this.br = new BufferedReader(inputStreamReader);
             this.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
             this.bw = new BufferedWriter(outputStreamWriter);
-          
+
         } catch (Exception e) {
             System.out.println("Host is down, try again later");
             System.exit(0);
@@ -38,7 +38,7 @@ public class ChatClient extends Thread {
 
     }
 
-    //Thread that takes user input and write it to the socket.
+    // Thread that takes user input and write it to the socket.
     public void writeMessage() {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -55,8 +55,8 @@ public class ChatClient extends Thread {
         }
     }
 
-    //Thread that listens for incoming messages from the socket.
-    //Close the client socket if server is down.
+    // Thread that listens for incoming messages from the socket.
+    // Close the client socket if server is down.
     public void listenForMessage() {
 
         try {
@@ -77,7 +77,7 @@ public class ChatClient extends Thread {
         }
     }
 
-    //Close the socket, BufferedWriter & BufferedReader.
+    // Close the socket, BufferedWriter & BufferedReader.
     public void closeAllResources(Socket socket, BufferedReader br, BufferedWriter bw) {
         try {
             if (socket != null) {
@@ -96,7 +96,7 @@ public class ChatClient extends Thread {
         }
     }
 
-    //Creates an instance of ChatClient and starts two threads.
+    // Creates an instance of ChatClient and starts two threads.
 
     public static void main(String[] args) {
 
