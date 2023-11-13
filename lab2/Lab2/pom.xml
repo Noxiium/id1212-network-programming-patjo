@@ -8,6 +8,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <exec.mainClass>id1212.patjo.lab2.Lab2</exec.mainClass>
+        <exec.mainClass>id1212.patjo.lab2.Main</exec.mainClass>
     </properties>
 </project>
