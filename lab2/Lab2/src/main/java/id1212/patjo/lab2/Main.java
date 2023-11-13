@@ -8,6 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+            System.out.println("Starting http-server...");
             HttpServer httpServer = new HttpServer();
             httpServer.listenForClient();
         } catch (Exception e) {

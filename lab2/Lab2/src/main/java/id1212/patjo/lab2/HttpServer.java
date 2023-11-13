@@ -29,7 +29,6 @@ public class HttpServer {
 
         while (true) {
             try {
-                System.out.println("Starting http-server...");
                 System.out.println("Server listen on port 1234...");
 
                 Socket socket = serverSocket.accept();
