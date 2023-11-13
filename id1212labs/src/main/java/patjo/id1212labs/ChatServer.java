@@ -6,7 +6,7 @@ import java.net.Socket;
 
 /**
  *
- * ChatServer class handles the server-side logic of the chat application. 
+ * ChatServer class handles the server-side logic of the chat application.
  * 
  * @author patricialagerhult & johansellerfredlund
  */
@@ -14,9 +14,8 @@ public class ChatServer {
 
     ServerSocket serverSocket;
     int serverPort = 5555;
-    
 
-    //Creates a new instance of ChatServer 
+    // Creates a new instance of ChatServer
     public ChatServer() throws Exception {
         try {
             this.serverSocket = new ServerSocket(serverPort);
@@ -27,9 +26,8 @@ public class ChatServer {
         }
     }
 
-
-    //Listens for incoming client connections on port 5555 
-    //Creates a new ClientHandler thread for each connected client.
+    // Listens for incoming client connections on port 5555
+    // Creates a new ClientHandler thread for each connected client.
 
     public void listenForClient() throws Exception {
 
