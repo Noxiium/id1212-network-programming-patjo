@@ -18,6 +18,7 @@ public class Main {
         try {
             boolean extendedSMTP = sendMail.EHLO();
             sendMail.startTLS();
+            sendMail.authLogin();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
