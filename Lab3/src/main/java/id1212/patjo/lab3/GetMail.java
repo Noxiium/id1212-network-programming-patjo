@@ -14,12 +14,14 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
 public class GetMail {
-    String USERNAME;
-    String PASSWORD;
-    String LOGIN_COMMAND;
-    String LIST_ALL_FOLDERS_COMMAND = "A1 LIST " + "\"\"" + " *" + "\r\n";
-    String SELECT_FOLDER_COMMAND = "A1 SELECT " + "INBOX" + "\r\n";
-    String RETRIEVE_MESSAGE_1_COMMAND = "A1 FETCH 3243 BODY[TEXT]" + "\r\n";
+    private String USERNAME;
+    private String PASSWORD;
+    private String LOGIN_COMMAND;
+    private String LIST_ALL_FOLDERS_COMMAND = "A1 LIST " + "\"\"" + " *" + "\r\n";
+    private String SELECT_FOLDER_COMMAND = "A1 SELECT " + "INBOX" + "\r\n";
+    private String RETRIEVE_MESSAGE_1_COMMAND = "A1 FETCH 3243 BODY[TEXT]" + "\r\n";
+    private BufferedReader reader;
+    private OutputStream outputStream;
 
     public GetMail() {
         readFromFile();
@@ -29,21 +31,21 @@ public class GetMail {
             SSLSocketFactory sslSocket = (SSLSocketFactory) SSLSocketFactory.getDefault();
             SSLSocket imapSocket = (SSLSocket) sslSocket.createSocket("webmail.kth.se", 993);
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(imapSocket.getInputStream()));
-            OutputStream outputStream = imapSocket.getOutputStream();
+            reader = new BufferedReader(new InputStreamReader(imapSocket.getInputStream()));
+            outputStream = imapSocket.getOutputStream();
             String connectionResponse = reader.readLine();
             System.out.println(connectionResponse);
 
-            sendIMAPCommand(LOGIN_COMMAND, outputStream);
-            printIMAPResponse(reader);
+            sendIMAPCommand(LOGIN_COMMAND);
+            printIMAPResponse();
 
-            sendIMAPCommand(LIST_ALL_FOLDERS_COMMAND, outputStream);
-            printIMAPResponse(reader);
+            sendIMAPCommand(LIST_ALL_FOLDERS_COMMAND);
+            printIMAPResponse();
 
-            sendIMAPCommand(SELECT_FOLDER_COMMAND, outputStream);
-            printIMAPResponse(reader);
+            sendIMAPCommand(SELECT_FOLDER_COMMAND);
+            printIMAPResponse();
 
-            fetchMailPrintOnlyText(RETRIEVE_MESSAGE_1_COMMAND, reader, outputStream);
+            fetchMailPrintOnlyText(RETRIEVE_MESSAGE_1_COMMAND);
 
             imapSocket.close();
             System.out.println("Program done");
@@ -54,7 +56,7 @@ public class GetMail {
 
     }
 
-    private void printIMAPResponse(BufferedReader reader) {
+    private void printIMAPResponse() {
         String listAllResponse;
         try {
             while ((listAllResponse = reader.readLine()) != null) {
@@ -68,7 +70,7 @@ public class GetMail {
         }
     }
 
-    private void sendIMAPCommand(String command, OutputStream outputStream) {
+    private void sendIMAPCommand(String command) {
         try {
             outputStream.write(command.getBytes());
             outputStream.flush();
@@ -92,8 +94,8 @@ public class GetMail {
         }
     }
 
-    private void fetchMailPrintOnlyText(String command, BufferedReader reader, OutputStream outputStream) {
-        sendIMAPCommand(command, outputStream);
+    private void fetchMailPrintOnlyText(String command) {
+        sendIMAPCommand(command);
         String newLine;
         String emailContent = "";
         try {
