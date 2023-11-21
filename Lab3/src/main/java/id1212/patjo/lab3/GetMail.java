@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
@@ -41,8 +43,7 @@ public class GetMail {
             sendIMAPCommand(SELECT_FOLDER_COMMAND, outputStream);
             printIMAPResponse(reader);
 
-            sendIMAPCommand(RETRIEVE_MESSAGE_1_COMMAND, outputStream);
-            printIMAPResponse(reader);
+            fetchMailPrintOnlyText(RETRIEVE_MESSAGE_1_COMMAND, reader, outputStream);
 
             imapSocket.close();
             System.out.println("Program done");
@@ -88,6 +89,29 @@ public class GetMail {
             System.out.println("Password:" + "*************************");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void fetchMailPrintOnlyText(String command, BufferedReader reader, OutputStream outputStream) {
+        sendIMAPCommand(command, null);
+        String newLine;
+        String emailContent = "";
+        try {
+            while ((newLine = reader.readLine()) != null) {
+                emailContent += newLine;
+                if (newLine.contains("A1"))
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Pattern pattern = Pattern.compile("<p>(.*?)<br>");
+        Matcher matcher = pattern.matcher(emailContent);
+
+        while (matcher.find()) {
+            String message = matcher.group(1); // Extract content within <p> tags
+            System.out.println("The Message: " + message);
         }
     }
 }
