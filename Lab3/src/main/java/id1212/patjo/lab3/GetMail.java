@@ -93,7 +93,7 @@ public class GetMail {
     }
 
     private void fetchMailPrintOnlyText(String command, BufferedReader reader, OutputStream outputStream) {
-        sendIMAPCommand(command, null);
+        sendIMAPCommand(command, outputStream);
         String newLine;
         String emailContent = "";
         try {
