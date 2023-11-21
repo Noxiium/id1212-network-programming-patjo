@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.Socket;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +30,7 @@ public class GetMail {
             SSLSocket imapSocket = (SSLSocket) sslSocket.createSocket("webmail.kth.se", 993);
 
             reader = new BufferedReader(new InputStreamReader(imapSocket.getInputStream()));
+
             outputStream = imapSocket.getOutputStream();
             String connectionResponse = reader.readLine();
             System.out.println(connectionResponse);
