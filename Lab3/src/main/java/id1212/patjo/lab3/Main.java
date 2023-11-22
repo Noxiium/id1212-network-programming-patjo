@@ -2,8 +2,7 @@ package id1212.patjo.lab3;
 
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -26,6 +25,7 @@ public class Main {
                     try {
                         GetMail getMail = new GetMail();//Part 1
                         getMail.fetchMail();
+                        scanner.close();
                         
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -42,14 +42,6 @@ public class Main {
                             String userInput = scanner.nextLine();
                             sendMail.sendEncodedUserInput(userInput);
                         }
-
-                        /*while (true) {
-                            String userInput = scanner.nextLine();
-                            if (userInput.equals("send")) {
-                                break;
-                            }
-                            sendMail.sendUserInput(userInput);
-                        }*/
                         
                         System.out.println("Enter the sender's email:");
                         sendMail.senderAddressCommand(scanner.nextLine());
