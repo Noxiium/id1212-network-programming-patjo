@@ -2,7 +2,7 @@ package id1212.patjo.lab2;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.Socket;
+import javax.net.ssl.SSLSocket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,7 +21,7 @@ public class ClientHandlerController implements Runnable {
 
     private static List<GameModel> clients = new ArrayList<>();
     private static int generateClientID = 20;
-    private Socket socket;
+    private SSLSocket socket;
     private BufferedReader br;
     private InputStreamReader inputStreamReader;
     private GameModel gameModel;
@@ -43,7 +43,7 @@ public class ClientHandlerController implements Runnable {
      * @param socket . The Client's socket used for communication.
      */
 
-    public ClientHandlerController(Socket socket) {
+    public ClientHandlerController(SSLSocket socket) {
         try {
             this.socket = socket;
             this.inputStreamReader = new InputStreamReader(socket.getInputStream());
@@ -85,8 +85,9 @@ public class ClientHandlerController implements Runnable {
             socket.close();
 
         } catch (Exception e) {
-            System.out.println("###### Caught error #####");
-            System.out.println("\"this.requestLine\" is null");
+            e.printStackTrace();
+            //System.out.println("###### Caught error #####");
+            //System.out.println("\"this.requestLine\" is null");
         }
 
     }
@@ -101,6 +102,7 @@ public class ClientHandlerController implements Runnable {
      */
     private RequestType getHTTPRequestType() throws Exception {
         this.requestLine = br.readLine();
+        System.out.println(requestLine);
         // System.out.println("Request type: " + requestLine);
         if (this.requestLine.contains("/favicon.ico")) {
             return RequestType.favicon;

@@ -2,7 +2,7 @@ package id1212.patjo.lab2;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.net.Socket;
+import javax.net.ssl.SSLSocket;
 
 /**
  *
@@ -22,7 +22,7 @@ public class View {
      *
      * @param socket, the socket associated with the client
      */
-    public View(Socket socket) {
+    public View(SSLSocket socket) {
 
         try {
             this.outputStream = socket.getOutputStream();
@@ -190,7 +190,7 @@ public class View {
                 <script type="text/javascript">
                 function sendUserInput() {
                 var userInput = document.getElementById("guess").value;
-                window.location.href = "http://localhost:1234/submitguess?guess=" + encodeURIComponent(userInput);
+                window.location.href = "https://localhost:1234/submitguess?guess=" + encodeURIComponent(userInput);
                 }
                 </script>
                 </body>
@@ -210,7 +210,7 @@ public class View {
                 </form>
                 <script type="text/javascript">
                 function restart() {
-                   window.location.href = "http://localhost:1234/";
+                   window.location.href = "https://localhost:1234/";
                 }
                 </script>
                 </body>
