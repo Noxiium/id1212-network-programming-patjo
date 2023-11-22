@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import java.util.Base64;
 
 /**
  *
@@ -44,9 +45,41 @@ public class SendMail {
 
     }
 
-    public void EHLO() throws IOException {
-        System.out.println("C: EHLO patlag@kth.se");
-        writer.println("EHLO patlag@kth.se");
+    public void establishConnection(){
+        try {
+            EHLO();
+        } catch (Exception e) {
+            
+        }
+    }
+
+    public void sendUserInput(String input) throws IOException{
+        System.out.println("C: " + input);
+        writer.println(input);
+        writer.flush();
+
+        System.out.println("S: " + reader.readLine());
+    }
+
+    public void sendEncodedUserInput(String input) throws IOException{
+        String encodedInput = encodeString(input);
+        System.out.println("C: " + encodedInput);
+        writer.println(encodedInput);
+
+        String response = reader.readLine();
+        try {
+            String decodedResponse = decodeResponse(response);
+            System.out.println("S: " + decodedResponse);
+        } catch (Exception e) {
+            System.out.println("S: " + response);
+        }
+        
+        
+    }
+
+    private void EHLO() throws IOException {
+        System.out.println("C: EHLO webmail.kth.se");
+        writer.println("EHLO webmail.kth.se");
         writer.flush();
 
         String response;
@@ -69,7 +102,7 @@ public class SendMail {
 
     }
 
-    public void startTLS() throws IOException {
+    private void startTLS() throws IOException {
         System.out.println("C: STARTTLS");
         writer.println("STARTTLS");
         writer.flush();
@@ -82,7 +115,7 @@ public class SendMail {
 
     }
 
-    public void upgradeSocket() throws IOException {
+    private void upgradeSocket() throws IOException {
 
         SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
         SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(this.socket, this.socket.getInetAddress().getHostAddress(), socket.getPort(), true);
@@ -95,8 +128,8 @@ public class SendMail {
 
         if (TLSisActive) {
 
-            System.out.println("C: EHLO patlag@kth.se");
-            writer.println("EHLO patlag@kth.se");
+            System.out.println("C: EHLO webmail.kth.se");
+            writer.println("EHLO webmail.kth.se");
             writer.flush();
 
             String response;
@@ -117,17 +150,28 @@ public class SendMail {
 
     }
 
-    public void authLogin() throws IOException {
+    private void authLogin() throws IOException {
         System.out.println("C: AUTH LOGIN");
         writer.println("AUTH LOGIN");
         writer.flush();
 
-        String response;
-
-        response = reader.readLine();
-        System.out.println("S: " + response);
-
-
+        String response = reader.readLine();
+        String decodedResponse = decodeResponse(response);
+        System.out.println("S: " + decodedResponse);
     }
 
+    private String decodeResponse(String response)throws IllegalArgumentException{
+        String[] responsSplit = response.split(" ");
+        byte[] decodedBytes = Base64.getDecoder().decode(responsSplit[1]);
+        String decodedStringResponse = new String(decodedBytes);
+        return decodedStringResponse;
+    
+    }
+
+    private String encodeString(String str){
+        String encodedString = Base64.getEncoder().encodeToString(str.getBytes());
+        System.out.println(encodedString);
+        
+        return encodedString;
+    }
 }
