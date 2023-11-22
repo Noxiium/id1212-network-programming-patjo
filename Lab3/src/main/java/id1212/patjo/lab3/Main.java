@@ -44,17 +44,17 @@ public class Main {
                         }
                         
                         System.out.println("Enter the sender's email:");
-                        sendMail.senderAddressCommand(scanner.nextLine());
+                        sendMail.setSenderAddress(scanner.nextLine());
                         
                         System.out.println("Enter the recipient's email:");
-                        sendMail.recipientAddressCommand(scanner.nextLine());
+                        sendMail.setRecipientAddress(scanner.nextLine());
                         
                         System.out.println("Enter email subject:");
-                        sendMail.setSubject(scanner.nextLine());
+                        sendMail.setEmailSubject(scanner.nextLine());
                         
                         sendMail.sendUserInput("DATA");
                         
-                        sendMail.dataCommand(scanner.nextLine());
+                        sendMail.setEmailContent(scanner.nextLine());
     
                         sendMail.sendUserInput("QUIT");
                         scanner.close();

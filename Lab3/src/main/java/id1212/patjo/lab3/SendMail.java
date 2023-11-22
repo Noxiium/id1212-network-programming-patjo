@@ -28,7 +28,7 @@ public class SendMail {
     private Matcher matcher;
     private String senderAddress;
     private String recipiantAddress;
-    private String subject;
+    private String emailSubject;
 
     public SendMail() {
         try {
@@ -53,6 +53,7 @@ public class SendMail {
         try {
             EHLO();
         } catch (Exception e) {
+            e.printStackTrace();
 
         }
     }
@@ -176,28 +177,29 @@ public class SendMail {
         return encodedString;
     }
 
-    public void senderAddressCommand(String address) throws IOException {
+    public void setSenderAddress(String address) throws IOException {
         this.senderAddress = address;
         String command = "MAIL FROM:<" + address + ">";
         sendUserInput(command);
 
     }
 
-    public void recipientAddressCommand(String address) throws IOException {
+    public void setRecipientAddress(String address) throws IOException {
         this.recipiantAddress = address;
         String command = "RCPT TO:<" + address + ">";
         sendUserInput(command);
 
     }
     
-    public void setSubject(String subject){
-        this.subject = subject;
+    public void setEmailSubject(String emailSubject){
+        this.emailSubject = emailSubject;
     }
-    public void dataCommand(String data) throws IOException{
+    
+    public void setEmailContent(String data) throws IOException{
          // Construct the email message string
         String emailData = "From: " + this.senderAddress + "\r\n"
                 + "To: " + this.recipiantAddress + "\r\n"
-                + "Subject: " + this.subject + "\r\n"
+                + "Subject: " + this.emailSubject + "\r\n"
                 + "Date: " + LocalDateTime.now() + "\r\n"
                 + "\r\n" // Empty line separating headers from body
                 + data + "\r\n."; // Message body and terminating period
