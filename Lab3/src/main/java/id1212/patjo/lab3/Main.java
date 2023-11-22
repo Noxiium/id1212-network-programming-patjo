@@ -1,11 +1,9 @@
-
 package id1212.patjo.lab3;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Scanner;
-import java.util.Base64;
 
 /**
  *
@@ -14,46 +12,72 @@ import java.util.Base64;
 public class Main {
 
     public static void main(String[] args) {
-        String from = "patlag@kth.se";
-        String to = "johansf@kth.se";
-        String subject = "Your Subject";
-        String date = "Tue, 22 Nov 2023 12:00:00 +0000"; // Replace with an actual date
-        String body = "Hello Johan,\n\nThis is the content of the email message.\nYou can write multiple lines here.\n\nRegards,\n[Patlag]";
 
-        // Construct the email message string
-        String emailData = "From: " + from + "\r\n"
-                + "To: " + to + "\r\n"
-                + "Subject: " + subject + "\r\n"
-                + "Date: " + date + "\r\n"
-                + "\r\n" // Empty line separating headers from body
-                + body + "\r\n."; // Message body and terminating period
-        
         Scanner scanner = new Scanner(System.in);
 
-        //GetMail GetMail = new GetMail();  //Part 1
-        SendMail sendMail = new SendMail(); // Part 2 
-        
-        try {
-            sendMail.establishConnection();
-            String userUserName = scanner.nextLine();
-            sendMail.sendEncodedUserInput(userUserName);
-            String userUserPassword = scanner.nextLine();
-            sendMail.sendEncodedUserInput(userUserPassword);
-            
-            /*while(true){
-                String userInput = scanner.nextLine();
-                if(userInput.equals("send"))
-                    break;
-                sendMail.sendUserInput(userInput);
-            }*/
-            sendMail.sendUserInput("MAIL FROM:<patlag@kth.se>");
-            sendMail.sendUserInput("RCPT TO:<johansf@kth.se>");
-            sendMail.sendUserInput("DATA");
-            sendMail.sendUserInput(emailData);
-            sendMail.sendUserInput("QUIT");
-            scanner.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        OUTER:
+        while (true) {
+            System.out.println("Select: \n 1.Get mail \n 2.Send mail");
+            String option = scanner.nextLine();
+
+            switch (option) {
+                case "1" -> {
+
+                    try {
+                        GetMail getMail = new GetMail();//Part 1
+                        getMail.fetchMail();
+                        
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    break OUTER;
+                }
+                case "2" -> {
+
+                    try {
+                        SendMail sendMail = new SendMail(); // Part 2
+                        sendMail.establishConnection();
+
+                        for (int i = 0; i < 2; i++) {
+                            String userInput = scanner.nextLine();
+                            sendMail.sendEncodedUserInput(userInput);
+                        }
+
+                        /*while (true) {
+                            String userInput = scanner.nextLine();
+                            if (userInput.equals("send")) {
+                                break;
+                            }
+                            sendMail.sendUserInput(userInput);
+                        }*/
+                        
+                        System.out.println("Enter the sender's email:");
+                        sendMail.senderAddressCommand(scanner.nextLine());
+                        
+                        System.out.println("Enter the recipient's email:");
+                        sendMail.recipientAddressCommand(scanner.nextLine());
+                        
+                        System.out.println("Enter email subject:");
+                        sendMail.setSubject(scanner.nextLine());
+                        
+                        sendMail.sendUserInput("DATA");
+                        
+                        sendMail.dataCommand(scanner.nextLine());
+    
+                        sendMail.sendUserInput("QUIT");
+                        scanner.close();
+                        
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                    break OUTER;
+                }
+
+                default ->
+                    System.out.println("Please enter a valid number\n");
+            }
         }
+
     }
 }

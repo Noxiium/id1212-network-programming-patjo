@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.net.ssl.SSLSocket;
@@ -18,13 +19,16 @@ import java.util.Base64;
  */
 public class SendMail {
 
-    Socket socket;
-    OutputStream outputStream;
-    BufferedReader reader;
-    PrintWriter writer;
-    Boolean extendedSMTP;
-    Pattern pattern;
-    Matcher matcher;
+    private Socket socket;
+    private OutputStream outputStream;
+    private BufferedReader reader;
+    private PrintWriter writer;
+    private Boolean extendedSMTP;
+    private Pattern pattern;
+    private Matcher matcher;
+    private String senderAddress;
+    private String recipiantAddress;
+    private String subject;
 
     public SendMail() {
         try {
@@ -35,9 +39,9 @@ public class SendMail {
             this.pattern = Pattern.compile("^250\\s");
             this.extendedSMTP = false;
 
-            System.out.println("C: <Connects to smtp.kth.se on port 587>");
+            System.out.println("\nC: <Connects to smtp.kth.se on port 587>");
             String response = reader.readLine();
-            System.out.println("S: " + response);
+            System.out.println("\nS: " + response);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,25 +49,25 @@ public class SendMail {
 
     }
 
-    public void establishConnection(){
+    public void establishConnection() {
         try {
             EHLO();
         } catch (Exception e) {
-            
+
         }
     }
 
-    public void sendUserInput(String input) throws IOException{
-        System.out.println("C: " + input);
+    public void sendUserInput(String input) throws IOException {
+        System.out.println("\nC: " + input);
         writer.println(input);
         writer.flush();
 
         System.out.println("S: " + reader.readLine());
     }
 
-    public void sendEncodedUserInput(String input) throws IOException{
+    public void sendEncodedUserInput(String input) throws IOException {
         String encodedInput = encodeString(input);
-        System.out.println("C: " + encodedInput);
+        System.out.println("\nC: " + encodedInput);
         writer.println(encodedInput);
 
         String response = reader.readLine();
@@ -73,12 +77,11 @@ public class SendMail {
         } catch (Exception e) {
             System.out.println("S: " + response);
         }
-        
-        
+
     }
 
     private void EHLO() throws IOException {
-        System.out.println("C: EHLO webmail.kth.se");
+        System.out.println("\nC: EHLO webmail.kth.se");
         writer.println("EHLO webmail.kth.se");
         writer.flush();
 
@@ -103,7 +106,7 @@ public class SendMail {
     }
 
     private void startTLS() throws IOException {
-        System.out.println("C: STARTTLS");
+        System.out.println("\nC: STARTTLS");
         writer.println("STARTTLS");
         writer.flush();
 
@@ -124,11 +127,11 @@ public class SendMail {
         this.writer = new PrintWriter(sslSocket.getOutputStream(), true);
 
         Boolean TLSisActive = sslSocket.getSession().isValid();
-        System.out.println("<TLS active: " + TLSisActive + ">");
+        System.out.println("\n<TLS active: " + TLSisActive + ">");
 
         if (TLSisActive) {
 
-            System.out.println("C: EHLO webmail.kth.se");
+            System.out.println("\nC: EHLO webmail.kth.se");
             writer.println("EHLO webmail.kth.se");
             writer.flush();
 
@@ -151,7 +154,7 @@ public class SendMail {
     }
 
     private void authLogin() throws IOException {
-        System.out.println("C: AUTH LOGIN");
+        System.out.println("\nC: AUTH LOGIN");
         writer.println("AUTH LOGIN");
         writer.flush();
 
@@ -160,18 +163,47 @@ public class SendMail {
         System.out.println("S: " + decodedResponse);
     }
 
-    private String decodeResponse(String response)throws IllegalArgumentException{
+    private String decodeResponse(String response) throws IllegalArgumentException {
         String[] responsSplit = response.split(" ");
         byte[] decodedBytes = Base64.getDecoder().decode(responsSplit[1]);
         String decodedStringResponse = new String(decodedBytes);
         return decodedStringResponse;
-    
+
     }
 
-    private String encodeString(String str){
+    private String encodeString(String str) {
         String encodedString = Base64.getEncoder().encodeToString(str.getBytes());
-        System.out.println(encodedString);
-        
         return encodedString;
+    }
+
+    public void senderAddressCommand(String address) throws IOException {
+        this.senderAddress = address;
+        String command = "MAIL FROM:<" + address + ">";
+        sendUserInput(command);
+
+    }
+
+    public void recipientAddressCommand(String address) throws IOException {
+        this.recipiantAddress = address;
+        String command = "RCPT TO:<" + address + ">";
+        sendUserInput(command);
+
+    }
+    
+    public void setSubject(String subject){
+        this.subject = subject;
+    }
+    public void dataCommand(String data) throws IOException{
+         // Construct the email message string
+        String emailData = "From: " + this.senderAddress + "\r\n"
+                + "To: " + this.recipiantAddress + "\r\n"
+                + "Subject: " + this.subject + "\r\n"
+                + "Date: " + LocalDateTime.now() + "\r\n"
+                + "\r\n" // Empty line separating headers from body
+                + data + "\r\n."; // Message body and terminating period
+        
+       sendUserInput(emailData);
+        
+        
     }
 }
