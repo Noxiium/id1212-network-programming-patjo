@@ -12,8 +12,7 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        //GetMail GetMail = new GetMail();
+        // GetMail GetMail = new GetMail();
         SendMail sendMail = new SendMail();
         try {
             boolean extendedSMTP = sendMail.EHLO();
