@@ -14,23 +14,22 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         OUTER: while (true) {
-            System.out.println("Select: \n 1.Get mail \n 2.Send mail");
+            System.out.println("Select: \n 1.Get mail \n 2.Send mail \n 3.Quit program");
             String option = scanner.nextLine();
 
             switch (option) {
-                case "1" -> {
+                case "1": {
 
                     try {
                         GetMail getMail = new GetMail();// Part 1
                         getMail.fetchMail();
-                        scanner.close();
 
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-                    break OUTER;
+                    break;
                 }
-                case "2" -> {
+                case "2": {
 
                     try {
                         SendMail sendMail = new SendMail(); // Part 2
@@ -55,16 +54,18 @@ public class Main {
                         sendMail.setEmailContent(scanner.nextLine());
 
                         sendMail.sendUserInput("QUIT");
-                        scanner.close();
 
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
 
+                    break;
+                }
+                case "3": {
+                    scanner.close();
                     break OUTER;
                 }
-
-                default ->
+                default:
                     System.out.println("Please enter a valid number\n");
             }
         }
