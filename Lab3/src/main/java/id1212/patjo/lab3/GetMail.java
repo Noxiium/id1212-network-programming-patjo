@@ -24,7 +24,6 @@ public class GetMail {
     private OutputStream outputStream;
     private SSLSocket imapSocket;
     private SSLSocketFactory sslSocket;
-    
 
     public GetMail() {
         readFromFile();
@@ -37,7 +36,7 @@ public class GetMail {
             reader = new BufferedReader(new InputStreamReader(imapSocket.getInputStream()));
 
             outputStream = imapSocket.getOutputStream();
-            
+
             String connectionResponse = reader.readLine();
             System.out.println("S: " + connectionResponse);
 
@@ -95,8 +94,9 @@ public class GetMail {
 
     private void readFromFile() {
         try {
-            String filePath = "/Users/patricialagerhult/NetBeansProjects/networkprog/id1212-network-programming-patjo/Lab3/src/main/java/id1212/patjo/lab3/password.txt";
-            //String filePath = "C:\\Users\\PC\\git_projects\\id1212-network-programming-patjo\\Lab3\\src\\main\\java\\id1212\\patjo\\lab3\\password.txt";
+            // String filePath =
+            // "/Users/patricialagerhult/NetBeansProjects/networkprog/id1212-network-programming-patjo/Lab3/src/main/java/id1212/patjo/lab3/password.txt";
+            String filePath = "C:\\Users\\PC\\git_projects\\id1212-network-programming-patjo\\Lab3\\src\\main\\java\\id1212\\patjo\\lab3\\password.txt";
             File file = new File(filePath);
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -104,6 +104,7 @@ public class GetMail {
             this.PASSWORD = bufferedReader.readLine();
             System.out.println("Username:" + USERNAME);
             System.out.println("Password:" + "*************************");
+            bufferedReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

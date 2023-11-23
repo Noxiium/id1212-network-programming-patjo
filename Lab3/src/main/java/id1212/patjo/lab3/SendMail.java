@@ -122,7 +122,8 @@ public class SendMail {
     private void upgradeSocket() throws IOException {
 
         SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(this.socket, this.socket.getInetAddress().getHostAddress(), socket.getPort(), true);
+        SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(this.socket,
+                this.socket.getInetAddress().getHostAddress(), socket.getPort(), true);
 
         this.reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
         this.writer = new PrintWriter(sslSocket.getOutputStream(), true);
@@ -190,22 +191,21 @@ public class SendMail {
         sendUserInput(command);
 
     }
-    
-    public void setEmailSubject(String emailSubject){
+
+    public void setEmailSubject(String emailSubject) {
         this.emailSubject = emailSubject;
     }
-    
-    public void setEmailContent(String data) throws IOException{
-         // Construct the email message string
+
+    public void setEmailContent(String data) throws IOException {
+        // Construct the email message string
         String emailData = "From: " + this.senderAddress + "\r\n"
                 + "To: " + this.recipiantAddress + "\r\n"
                 + "Subject: " + this.emailSubject + "\r\n"
                 + "Date: " + LocalDateTime.now() + "\r\n"
                 + "\r\n" // Empty line separating headers from body
                 + data + "\r\n."; // Message body and terminating period
-        
-       sendUserInput(emailData);
-        
-        
+
+        sendUserInput(emailData);
+
     }
 }
