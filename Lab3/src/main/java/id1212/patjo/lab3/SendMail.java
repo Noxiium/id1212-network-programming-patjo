@@ -156,7 +156,8 @@ public class SendMail {
     private void upgradeSocket() throws IOException {
 
         SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(this.socket, this.socket.getInetAddress().getHostAddress(), socket.getPort(), true);
+        SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(this.socket,
+                this.socket.getInetAddress().getHostAddress(), socket.getPort(), true);
 
         this.reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
         this.writer = new PrintWriter(sslSocket.getOutputStream(), true);
@@ -276,9 +277,8 @@ public class SendMail {
                 + "Date: " + LocalDateTime.now() + "\r\n"
                 + "\r\n" // Empty line separating headers from body
                 + data + "\r\n."; // Message body and terminating period
-        
-       sendUserInput(emailData);
-        
-        
+
+        sendUserInput(emailData);
+
     }
 }
