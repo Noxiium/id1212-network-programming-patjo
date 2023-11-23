@@ -85,6 +85,9 @@ public class SendMail {
     * @param input , the input from the user
     */
     public void sendEncodedUserInput(String input) throws IOException {
+        System.out.println("Input: " + input);
+        
+        
         String encodedInput = encodeString(input);
         
         System.out.println("\nC: " + encodedInput);
@@ -95,7 +98,7 @@ public class SendMail {
             String decodedResponse = decodeResponse(response);
             System.out.println("S: " + decodedResponse);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("S: " + response);
         }
 
     }
