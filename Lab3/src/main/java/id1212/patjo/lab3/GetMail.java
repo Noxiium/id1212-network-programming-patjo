@@ -25,8 +25,12 @@ public class GetMail {
     private SSLSocket imapSocket;
     private SSLSocketFactory sslSocket;
 
+    /*
+     * Creates an instance of GetMail
+     * 
+     */
     public GetMail() {
-        readFromFile();
+        setUserNameAndPasswordFromFile();
         LOGIN_COMMAND = "A1 LOGIN " + USERNAME + " " + PASSWORD + "\r\n";
         try {
 
@@ -92,7 +96,7 @@ public class GetMail {
         }
     }
 
-    private void readFromFile() {
+    private void setUserNameAndPasswordFromFile() {
         try {
             // String filePath =
             // "/Users/patricialagerhult/NetBeansProjects/networkprog/id1212-network-programming-patjo/Lab3/src/main/java/id1212/patjo/lab3/password.txt";
@@ -130,7 +134,7 @@ public class GetMail {
 
         while (matcher.find()) {
             String message = matcher.group(1); // Extract content within <p> tags
-            System.out.println("S: The Message: " + message);
+            System.out.println("S: Mail contains: " + message);
         }
     }
 }

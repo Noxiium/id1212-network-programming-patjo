@@ -33,35 +33,31 @@ public class HttpServer {
         SSLServerSocketFactory sslServerSocketFactory;
         try {
 
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory
-                    .getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            // Initialize an input stream to read the
+            // content of the key .pfx file
+            InputStream inputStream = new FileInputStream(new File("C:\\Users\\PC\\keyPC.pfx"));
 
-            char[] keystorePassword = "patjo123".toCharArray();
+            // Initializes a KeyStore object and load it using
+            // the input stream and the keystore password.
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            InputStream inputStream = null;
-            inputStream = new FileInputStream(new File("C:\\Users\\PC\\keyPC.pfx"));
+            char[] keystorePassword = "patjo123".toCharArray();
             keyStore.load(inputStream, keystorePassword);
 
+            // Gets a KMF instance using default algorithm
+            // Initializes the KMF with loaded keystore and password
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory
+                    .getInstance(KeyManagerFactory.getDefaultAlgorithm());
             keyManagerFactory.init(keyStore, keystorePassword);
+
+            // Creates SSLContext using TLS protocol.
+            // Initializes the SSL context with the key managers
+            // obtained from the key manager factory.
+            // Creates an SSL server socket using the SSL server socket factory and binds it
+            // to the specified serverPort.
+            SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
-
             sslServerSocketFactory = sslContext.getServerSocketFactory();
-
-            for (int i = 0; i < sslServerSocketFactory.getSupportedCipherSuites().length; i++)
-                System.out.println(sslServerSocketFactory.getSupportedCipherSuites()[i]);
             this.serverSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(serverPort);
-            // String[] cipher = {"SSL_DH_anon_WITH_RC4_128_MD5"};
-            String[] cipher = { "TLS_RSA_WITH_AES_128_CBC_SHA" };
-            // ss.setEnabledCipherSuites(cipher);
-            System.out.println("Choosen:");
-            for (int i = 0; i < serverSocket.getEnabledCipherSuites().length; i++)
-                System.out.println(serverSocket.getEnabledCipherSuites()[i]);
-
-            // SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory)
-            // SSLServerSocketFactory.getDefault();
-            // serverSocket = (SSLServerSocket)
-            // sslServerSocketFactory.createServerSocket(serverPort);
 
         } catch (Exception e) {
             // e.printStackTrace();

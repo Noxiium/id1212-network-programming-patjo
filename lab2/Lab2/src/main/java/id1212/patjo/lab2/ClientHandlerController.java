@@ -1,7 +1,10 @@
 package id1212.patjo.lab2;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+
+import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +57,8 @@ public class ClientHandlerController implements Runnable {
             closeAllResources();
         }
     }
-    
-    
-      @Override
+
+    @Override
     public void run() {
         try {
             // Get what type of request it is
@@ -84,10 +86,12 @@ public class ClientHandlerController implements Runnable {
             inputStreamReader.close();
             socket.close();
 
+        } catch (SSLHandshakeException SSLHandshakeException) {
+            System.out.println("SSL Exception Caught");
+        } catch (IOException IOE) {
+            System.out.println("IO Exception Caught");
         } catch (Exception e) {
-            e.printStackTrace();
-            //System.out.println("###### Caught error #####");
-            //System.out.println("\"this.requestLine\" is null");
+            System.out.println("Exception caught");
         }
 
     }
@@ -162,8 +166,6 @@ public class ClientHandlerController implements Runnable {
             view.guessHTTPResponse(answer, numberOfGuesses, clientID, userGuess, gameModel.getStringDiff(userGuess));
         }
     }
-
-  
 
     /**
      * Set the client's GameModel. If the client ID already exists, retrieve the
@@ -260,7 +262,7 @@ public class ClientHandlerController implements Runnable {
                 br.close();
             if (inputStreamReader != null)
                 inputStreamReader.close();
-          
+
         } catch (Exception e) {
             e.printStackTrace();
         }
