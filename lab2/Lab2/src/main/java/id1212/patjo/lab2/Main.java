@@ -1,12 +1,9 @@
 package id1212.patjo.lab2;
 
 /**
- * Main Class for the Guessing Game.
- * Creates an instance of HttpServer.
- * 
- * @author patricialagerhult && johansellerfredlund
+ *
+ * @author patricialagerhult
  */
-
 public class Main {
 
     public static void main(String[] args) {
