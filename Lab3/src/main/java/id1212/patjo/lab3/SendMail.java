@@ -16,7 +16,7 @@ import java.util.Base64;
 /**
  *SendMail Class for sending email using SMTP upgraded with TLS.
  * 
- * @author patricialagerhult && johansellerfredlund
+ * @author patricialagerhult and johansellerfredlund
  */
 public class SendMail {
 
@@ -43,7 +43,7 @@ public class SendMail {
             this.pattern = Pattern.compile("^250\\s");
             this.extendedSMTP = false;
 
-            //Print connection information
+            //Print connection response from the server.
             System.out.println("\nC: <Connects to smtp.kth.se on port 587>");
             String response = reader.readLine();
             System.out.println("\nS: " + response);
