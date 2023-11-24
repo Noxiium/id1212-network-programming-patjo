@@ -14,7 +14,7 @@ import javax.net.ssl.SSLSocketFactory;
 import java.util.Base64;
 
 /**
- *SendMail Class for sending email using SMTP upgraded with TLS.
+ * SendMail Class for sending email using SMTP upgraded with TLS.
  * 
  * @author patricialagerhult and johansellerfredlund
  */
@@ -32,7 +32,7 @@ public class SendMail {
     private String emailSubject;
 
     /**
-     *Creates an instance of SendMail.
+     * Creates an instance of SendMail.
      */
     public SendMail() {
         try {
@@ -43,7 +43,7 @@ public class SendMail {
             this.pattern = Pattern.compile("^250\\s");
             this.extendedSMTP = false;
 
-            //Print connection response from the server.
+            // Print connection response from the server.
             System.out.println("\nC: <Connects to smtp.kth.se on port 587>");
             String response = reader.readLine();
             System.out.println("\nS: " + response);
@@ -67,10 +67,11 @@ public class SendMail {
     }
 
     /**
-    *Sends user input in plain text to the server and displays the server's response.
-    * 
-    * @param input , the input from the user
-    */
+     * Sends user input in plain text to the server and displays the server's
+     * response.
+     * 
+     * @param input , the input from the user
+     */
     public void sendUserInput(String input) throws IOException {
         System.out.println("\nC: " + input);
         writer.println(input);
@@ -80,16 +81,16 @@ public class SendMail {
     }
 
     /**
-    *Sends user input in Base64 encoding to the server and decode and displays the server's response.
-    * 
-    * @param input , the input from the user
-    */
+     * Sends user input in Base64 encoding to the server and decode and displays the
+     * server's response.
+     * 
+     * @param input , the input from the user
+     */
     public void sendEncodedUserInput(String input) throws IOException {
         System.out.println("Input: " + input);
-        
-        
+
         String encodedInput = encodeString(input);
-        
+
         System.out.println("\nC: " + encodedInput);
         writer.println(encodedInput);
 
@@ -102,12 +103,12 @@ public class SendMail {
         }
 
     }
-    
+
     /**
-     *Initiates the handshake with the SMTP server by sending command EHLO,
+     * Initiates the handshake with the SMTP server by sending command EHLO,
      * and print out the server's response.
-     * If the server supports the STARTTLS extension, 
-     * call the method startTLS() to upgrade to an encrypted connection. 
+     * If the server supports the STARTTLS extension,
+     * call the method startTLS() to upgrade to an encrypted connection.
      */
     private void EHLO() throws IOException {
         System.out.println("\nC: EHLO webmail.kth.se");
@@ -135,7 +136,7 @@ public class SendMail {
     }
 
     /**
-     *Send command STARTTLS to server to upgrade to a secure TLS connection.
+     * Send command STARTTLS to server to upgrade to a secure TLS connection.
      * Read the server's response and call method upgradeSocket()
      * to upgrades the socket if successful.
      */
@@ -153,7 +154,7 @@ public class SendMail {
     }
 
     /**
-     *Upgrades the socket to a secure TLS connection.
+     * Upgrades the socket to a secure TLS connection.
      * If upgrading was successful, send command EHLO to server again.
      */
     private void upgradeSocket() throws IOException {
@@ -193,7 +194,8 @@ public class SendMail {
     }
 
     /**
-     *Initiates the authentication process by sending the AUTH LOGIN command to the server.
+     * Initiates the authentication process by sending the AUTH LOGIN command to the
+     * server.
      * Decodes a Base64 encoded response from the server, and prints it.
      */
     private void authLogin() throws IOException {
@@ -243,8 +245,8 @@ public class SendMail {
         sendUserInput(command);
 
     }
-    
-     /**
+
+    /**
      * Sets the recipient's email address,
      * and sends the RCPT TO command to the server.
      * 
@@ -256,24 +258,24 @@ public class SendMail {
         sendUserInput(command);
 
     }
-    
+
     /**
-      * Sets the subject of the email.
+     * Sets the subject of the email.
      * 
      * @param emailSubject The subject of the email.
      */
-    public void setEmailSubject(String emailSubject){
+    public void setEmailSubject(String emailSubject) {
         this.emailSubject = emailSubject;
     }
-    
+
     /**
      * Sets the content of the outgoing email,
      * and sends it to the server.
      * 
      * @param data The content of the email.
      */
-    public void setEmailContent(String data) throws IOException{
-         // Construct the email message string
+    public void setEmailContent(String data) throws IOException {
+        // Construct the email message string
         String emailData = "From: " + this.senderAddress + "\r\n"
                 + "To: " + this.recipiantAddress + "\r\n"
                 + "Subject: " + this.emailSubject + "\r\n"
