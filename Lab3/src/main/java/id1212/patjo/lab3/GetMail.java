@@ -29,12 +29,13 @@ public class GetMail {
     private SSLSocketFactory sslSocket;
 
     /*
-     * Creates an instance of GetMail and establishes a connection to the IMAP server
+     * Creates an instance of GetMail and establishes a connection to the IMAP
+     * server
      * using SSL/TLS.
      */
     public GetMail() {
 
-        //Get the username and password from file and store them in private variables.
+        // Get the username and password from file and store them in private variables.
         setUserNameAndPasswordFromFile();
         LOGIN_COMMAND = "A1 LOGIN " + USERNAME + " " + PASSWORD + "\r\n";
 
@@ -45,7 +46,7 @@ public class GetMail {
             this.reader = new BufferedReader(new InputStreamReader(imapSocket.getInputStream()));
             this.outputStream = imapSocket.getOutputStream();
 
-            //Print connection response from the server.
+            // Print connection response from the server.
             String connectionResponse = reader.readLine();
             System.out.println("S: " + connectionResponse);
 
@@ -72,7 +73,7 @@ public class GetMail {
 
         fetchMailPrintOnlyText(RETRIEVE_MESSAGE_1_COMMAND);
 
-        //Close the socket
+        // Close the socket
         imapSocket.close();
         System.out.println("< Program done >");
     }
@@ -108,7 +109,7 @@ public class GetMail {
             } else {
                 System.out.println("C: " + command);
             }
-            
+
             outputStream.write(command.getBytes());
             outputStream.flush();
         } catch (Exception e) {
@@ -121,21 +122,22 @@ public class GetMail {
      */
     private void setUserNameAndPasswordFromFile() {
         try {
-            String filePath = "/Users/patricialagerhult/NetBeansProjects/networkprog/id1212-network-programming-patjo/Lab3/src/main/java/id1212/patjo/lab3/password.txt";
-            //String filePath = "C:\\Users\\PC\\git_projects\\id1212-network-programming-patjo\\Lab3\\src\\main\\java\\id1212\\patjo\\lab3\\password.txt";
+            // String filePath =
+            // "/Users/patricialagerhult/NetBeansProjects/networkprog/id1212-network-programming-patjo/Lab3/src/main/java/id1212/patjo/lab3/password.txt";
+            String filePath = "C:\\Users\\PC\\git_projects\\id1212-network-programming-patjo\\Lab3\\src\\main\\java\\id1212\\patjo\\lab3\\password.txt";
             File file = new File(filePath);
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            //Store username & password in private variables.
+            // Store username & password in private variables.
             this.USERNAME = bufferedReader.readLine();
             this.PASSWORD = bufferedReader.readLine();
 
-            //Prints to the console. 
+            // Prints to the console.
             System.out.println("Username:" + USERNAME);
             System.out.println("Password:" + "*************************");
 
-            //Close the BufferedReader.
+            // Close the BufferedReader.
             bufferedReader.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,11 +149,11 @@ public class GetMail {
      * Sends the FETCH command to the server to retrieve the email content,
      * and then extracts the text from the email.
      * 
-     * @param command, the FETCH command to retrieve the email. 
+     * @param command, the FETCH command to retrieve the email.
      */
     private void fetchMailPrintOnlyText(String command) {
         sendIMAPCommand(command);
-        
+
         String newLine;
         String emailContent = "";
         try {
@@ -165,11 +167,11 @@ public class GetMail {
             e.printStackTrace();
         }
 
-        //Use pattern to extract text content within <p> tags from email.
+        // Use pattern to extract text content within <p> tags from email.
         Pattern pattern = Pattern.compile("<p>(.*?)<br>");
         Matcher matcher = pattern.matcher(emailContent);
 
-        //Prints email to the console.
+        // Prints email to the console.
         while (matcher.find()) {
             String message = matcher.group(1); // Extract content within <p> tags
             System.out.println("S: Mail contains: " + message);
