@@ -5,6 +5,9 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <html>
 <head>
     <title>Guess Number Game!</title>
@@ -20,10 +23,16 @@
         <input type="submit" value="Submit Guess">
     </form>
 
-    <%-- Check if a guess exists in the request, and display it --%>
-    <c:if test="${not empty param.guess}">
-        <p>Your guess: ${param.guess}</p>
-    </c:if>
+<%-- Check if a guess exists in the request, and display it --%>
+<c:if test="${not empty param.guess}">
+    <p>Your guess: ${param.guess}</p>
+</c:if>
+
+<c:if test="${not empty requestScope.numberOfGuessesMade}">
+    <p>Number of guesses made: <%= request.getAttribute("numberOfGuessesMade") %></p>
+</c:if>
+
+
 
 </body>
 </html>
