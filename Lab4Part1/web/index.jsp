@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : Dec 1, 2023, 10:39:55 AM
-    Author     : PC
+     Main View page for the Guess Number Game.
+    - Includes a form enabling users to submit guesses, with restrictions to numbers between 1 and 100.
+    - Conditional rendering based on the presence of the 'guess' and 'numberOfGuessesMade' parameters.
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -18,7 +18,7 @@
     <form method="post" action="Controller">
         Guess a number between 1-100:
         <br>
-        <input type="text" name="guess">
+        <input type="text" name="guess" pattern="[1-9]\d?|100" title="Enter a number between 1 and 100" required>
         <br>
         <input type="submit" value="Submit Guess">
     </form>
