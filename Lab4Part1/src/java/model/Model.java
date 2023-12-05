@@ -19,11 +19,13 @@ public class Model {
      * Generates a random number, and NumberOfGuesses is set to 0
      */
     public Model() {
+        System.out.println("Model: constructor");
         generateRandomNumber();
         this.numberOfGuesses = NUMBER_OF_GUESSES_START_VALUE;
     }
 
     private void generateRandomNumber() {
+        System.out.println("Model: generateRNDNumber");
         Random rand = new Random();
         this.randomNumber = rand.nextInt(100) + 1;
 
