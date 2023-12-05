@@ -2,7 +2,7 @@ package model;
 
 import java.sql.*;
 
-import javax.swing.plaf.nimbus.State;
+
 /**
  *
  * @author johansellerfredlund && patricialagerhult

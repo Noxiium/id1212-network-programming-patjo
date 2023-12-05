@@ -7,7 +7,7 @@
 <body>
     <h1>Login</h1>
 
-    <h2>WRONG PASSWORD!!!! stupid much?</h2>
+    <h2>Wrong password, please try again</h2>
     <form method="post" action="ServletController">
         <br>
         <input type="text" name="usermail">
