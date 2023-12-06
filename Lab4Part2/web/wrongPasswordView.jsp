@@ -8,7 +8,7 @@
     <h1>Login</h1>
 
     <h2>Wrong password, please try again</h2>
-      <form method="post" action="ServletController">
+      <form method="post" action="LoginHandlerServlet">
         <br/>
         <p>Username: <input type="text" name="usermail" required></p>
         <p>Password: <input type="password" name="password" required></p>

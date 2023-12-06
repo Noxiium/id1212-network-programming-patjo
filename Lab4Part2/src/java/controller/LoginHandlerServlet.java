@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Model;
-//kommentar
-@WebServlet(name = "ServletController", urlPatterns = {"/ServletController", "/"})
-public class ServletController extends HttpServlet {
+
+public class LoginHandlerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
