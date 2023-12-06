@@ -16,8 +16,6 @@ public class ServletController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        
         // Retrieve the model associated with the current session,
         // or a new one if none existed.
         Model model = getOrCreateSessionModel(request);
@@ -39,6 +37,7 @@ public class ServletController extends HttpServlet {
         System.out.println("Contr: doPost");
         System.out.println("Session ID: " +  request.getSession().getId());
 
+        //Get parameters from inputfields in loginView
         String userMail = request.getParameter("usermail");
         request.setAttribute("usermail", userMail);
 

@@ -8,12 +8,11 @@
     <h1>Login</h1>
 
     <h2>Wrong password, please try again</h2>
-    <form method="post" action="ServletController">
-        <br>
-        <input type="text" name="usermail">
-        <br>
-        <input type="password" name="password">
-        <input type="submit" value="Login">
+      <form method="post" action="ServletController">
+        <br/>
+        <p>Username: <input type="text" name="usermail" required></p>
+        <p>Password: <input type="password" name="password" required></p>
+        <p><input type="submit" value="Login"></p>
     </form>
 
 </body>
