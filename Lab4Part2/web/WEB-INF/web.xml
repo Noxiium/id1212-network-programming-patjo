@@ -8,6 +8,10 @@
         <servlet-name>SelectSubjectServlet</servlet-name>
         <servlet-class>controller.SelectSubjectServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QuestionServlet</servlet-name>
+        <servlet-class>controller.QuestionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginHandlerServlet</servlet-name>
         <url-pattern>/LoginHandlerServlet</url-pattern>
@@ -16,6 +20,10 @@
     <servlet-mapping>
         <servlet-name>SelectSubjectServlet</servlet-name>
         <url-pattern>/SelectSubjectServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuestionServlet</servlet-name>
+        <url-pattern>/QuestionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

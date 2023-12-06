@@ -1,28 +1,38 @@
 package model;
 
 public class QuestionDTO {
-    private int ID;
     private String text;
     private String[] options;
     private String[] correctAnswerIndexes;
 
-    public QuestionDTO(int ID, String text, String[] options, String correctAnswerIndex){
-        this.ID = ID;
+    public QuestionDTO(String text, String options, String correctAnswerIndex){
         this.text = text;
-        this.options = options;
-        this.correctAnswerIndexes = convertDBRepresentationCorrectAnswerToArray(correctAnswerIndex);
+        this.options = convertDBRepresentationToStringArray(options);
+        this.correctAnswerIndexes = convertDBRepresentationToStringArray(correctAnswerIndex);
+        changeCorrectAnswerFormat();
     }
 
-    private String[] convertDBRepresentationCorrectAnswerToArray(String correctAnswer){
-        String[] correctAnswerIndexes = correctAnswer.split("/");
 
-        for(int i = 0; i < correctAnswerIndexes.length; i++){
-            System.out.println(correctAnswerIndexes[i]);
+    private String[] convertDBRepresentationToStringArray(String DBString){
+        String[] StringArray = DBString.split("/");
+
+        for(int i = 0; i < StringArray.length; i++){
+            System.out.println(StringArray[i]);
         }
-        return correctAnswerIndexes;
+        return StringArray;
     }
 
-    public int getID(){return this.ID;}
+    private void changeCorrectAnswerFormat(){
+
+        for(int i = 0; i < 3; i++){
+            if (this.correctAnswerIndexes[i].equals("1")){
+                this.correctAnswerIndexes[i] = "true";
+            } else {
+                this.correctAnswerIndexes[i] = "null";
+            }
+        }
+    }
+
     public String getText(){return this.text;}
     public String[] getOptions(){return this.options;}
     public String[] getCorrectAnswerIndexes(){return this.correctAnswerIndexes;}

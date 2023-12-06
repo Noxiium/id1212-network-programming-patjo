@@ -45,10 +45,16 @@ public class LoginHandlerServlet extends HttpServlet {
         request.setAttribute("password", userPassword);
         
         try{
-        if(!model.handleLoginInPostRequest(userMail, userPassword)){
+           int userID = model.handleLoginInPostRequest(userMail, userPassword);
+           System.out.println("UserID: " + userID);
+        if(userID == -1){
             request.getRequestDispatcher("wrongPasswordView.jsp").forward(request, response);
         }
         else{
+            String ID = String.valueOf(userID);
+            HttpSession session = request.getSession(false);
+            session.setAttribute("userId", ID);
+
             // TODO Call model, get QUIZZES from DB.
             // Send the quizzes as attributes to VIEW.
             ArrayList<SubjectDTO> subjectList = model.getQuizSubjectFromDB();
@@ -84,7 +90,7 @@ public class LoginHandlerServlet extends HttpServlet {
      */
     private UserModel getOrCreateSessionModel(HttpServletRequest request) {
 
-        System.out.println("Contr: getOrCreateSessionModel");
+        System.out.println("LoginHandlerServlet: getOrCreateSessionModel");
         // Get or create a session for the current client 
         HttpSession session = request.getSession(true);
 
