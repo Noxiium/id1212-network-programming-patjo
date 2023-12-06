@@ -1,13 +1,17 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Model;
+
+import model.SubjectDTO;
+import model.UserModel;
 
 public class LoginHandlerServlet extends HttpServlet {
 
@@ -15,9 +19,6 @@ public class LoginHandlerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // Retrieve the model associated with the current session,
-        // or a new one if none existed.
-        Model model = getOrCreateSessionModel(request);
         System.out.println("Contr: doGet");
         System.out.println("Session ID: " +  request.getSession().getId());
         System.out.println("________________________________________________________");
@@ -32,7 +33,7 @@ public class LoginHandlerServlet extends HttpServlet {
         
         // Retrieve the model associated with the current session,
         // or a new one if none existed.
-        Model model = getOrCreateSessionModel(request);
+        UserModel model = getOrCreateSessionModel(request);
         System.out.println("Contr: doPost");
         System.out.println("Session ID: " +  request.getSession().getId());
 
@@ -50,9 +51,18 @@ public class LoginHandlerServlet extends HttpServlet {
         else{
             // TODO Call model, get QUIZZES from DB.
             // Send the quizzes as attributes to VIEW.
+            ArrayList<SubjectDTO> subjectList = model.getQuizSubjectFromDB();
+            request.setAttribute("list", subjectList);
+            /* 
+            for(int i = 0; i < subjectList.size(); i++){
+                //request.setAttribute("subjectText" + String.valueOf(i), subjectList.get(i).getSubjectText());
+                //request.setAttribute("subjectID" + String.valueOf(i), subjectList.get(i).getSubjectID());
+             
+            }
+            */
+            //request.setAttribute("listSize",subjectList.size());
             request.getRequestDispatcher("selectSubjectView.jsp").forward(request, response);
         }
-
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -72,7 +82,7 @@ public class LoginHandlerServlet extends HttpServlet {
      * @param request
      * @return model
      */
-    private Model getOrCreateSessionModel(HttpServletRequest request) {
+    private UserModel getOrCreateSessionModel(HttpServletRequest request) {
 
         System.out.println("Contr: getOrCreateSessionModel");
         // Get or create a session for the current client 
@@ -80,9 +90,9 @@ public class LoginHandlerServlet extends HttpServlet {
 
         // Retrieve the model associated with the current session,
         // or create a new one if none existed.
-        Model model = (Model) session.getAttribute("model");
+        UserModel model = (UserModel) session.getAttribute("model");
         if (model == null) {
-            model = new Model();
+            model = new UserModel();
             session.setAttribute("model", model);
         }
         System.out.println("Session ID: " +  request.getSession().getId());
