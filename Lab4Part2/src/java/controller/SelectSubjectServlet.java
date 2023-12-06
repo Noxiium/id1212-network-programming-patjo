@@ -73,7 +73,6 @@ public class SelectSubjectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("SelectSubjectServlet: doGet");
         processRequest(request, response);
     }
 
@@ -97,7 +96,6 @@ public class SelectSubjectServlet extends HttpServlet {
      */
     private GameSessionModel getOrCreateSessionModel(HttpServletRequest request) {
 
-        System.out.println("SelectSubjectServlet: getOrCreateSessionModel");
         // Get or create a session for the current client 
         HttpSession session = request.getSession(true);
 
@@ -107,8 +105,6 @@ public class SelectSubjectServlet extends HttpServlet {
             model = new GameSessionModel();
             session.setAttribute("gameSessionModel", model);
         }
-        System.out.println("Session ID: " +  request.getSession().getId());
-        System.out.println("________________________________________________________");
 
 
 

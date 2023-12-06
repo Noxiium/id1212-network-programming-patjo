@@ -55,7 +55,6 @@ public class QuestionServlet extends HttpServlet {
 
             if(model.questionsID.isEmpty()){
                 String userId = (String)session.getAttribute("userId");
-                System.out.println("----- userID" + userId);
              // TODO skriva resultat till DB
              model.updateResultInDB(userId);
              // Skicka ny vy till användare
@@ -118,7 +117,6 @@ public class QuestionServlet extends HttpServlet {
      */
     private GameSessionModel getOrCreateSessionModel(HttpServletRequest request) {
 
-        System.out.println("SelectSubjectServlet: getOrCreateSessionModel");
         // Get or create a session for the current client 
         HttpSession session = request.getSession(true);
 
@@ -128,8 +126,7 @@ public class QuestionServlet extends HttpServlet {
             model = new GameSessionModel();
             session.setAttribute("gameSessionModel", model);
         }
-        System.out.println("Session ID: " +  request.getSession().getId());
-        System.out.println("________________________________________________________");
+
 
 
 

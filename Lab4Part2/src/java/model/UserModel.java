@@ -13,7 +13,7 @@ public class UserModel {
     private String userMail = "";
 
     public UserModel() {
-        System.out.println("Model: Model was created");
+        
     }
 
     public String getUserMail(){
@@ -30,14 +30,11 @@ public class UserModel {
             int subjectID = queryResult.getInt("ID");
             SubjectDTO subject = new SubjectDTO(subjectText, subjectID);
             subjectList.add(subject);
-
-            System.out.println(subject);
-            System.out.println(subjectID);
         }
         return subjectList;
     }
 
-    public Boolean handleLoginInPostRequest(String userMail, String userPassword) throws SQLException{
+    public int handleLoginInPostRequest(String userMail, String userPassword) throws SQLException{
         Statement statement = connectToDB();   
         Boolean userFound = false;
         int userID =checkIfUserMailExistsInDBReturnID(userMail, statement);
@@ -46,13 +43,14 @@ public class UserModel {
             userFound = true;
             Boolean correctPass = checkIfPasswordIsCorrect(userPassword, userID, statement);
             if(correctPass)
-                return true;          
+                return userID;
+;          
         }
         if (!userFound){
-            insertUserInfoIntoDB(userMail,userPassword,statement);
-            return true;
+            return insertUserInfoIntoDB(userMail,userPassword,statement);
+            
         }
-            return false;
+            return -1;
         
     }
 
@@ -64,17 +62,20 @@ public class UserModel {
         while (queryResult.next()) {
             String username = queryResult.getString("USERNAME");
             int userID = queryResult.getInt("ID");
-
-            System.out.println(username);
             if(username.equals(userMail))
                 return userID;
         }
         return -1;
     }
 
-    private void insertUserInfoIntoDB(String userMail, String userPassword, Statement statement) throws SQLException{
-            statement.executeUpdate("INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES('"+ userMail +"', '" + userPassword +"')");
-    
+    private int insertUserInfoIntoDB(String userMail, String userPassword, Statement statement) throws SQLException{
+        statement.executeUpdate("INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES('"+ userMail +"', '" + userPassword +"')");
+        ResultSet queryResult = statement.executeQuery("SELECT ID FROM APP.USERS WHERE USERNAME ='" + userMail + "'");
+        while (queryResult.next()){
+            int userID = queryResult.getInt("ID");
+            return userID;
+        }
+        return -1;
     }
 
     private Boolean checkIfPasswordIsCorrect(String userPassword, int userID, Statement statement) throws SQLException{

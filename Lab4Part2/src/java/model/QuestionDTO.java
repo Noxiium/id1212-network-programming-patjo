@@ -15,10 +15,6 @@ public class QuestionDTO {
 
     private String[] convertDBRepresentationToStringArray(String DBString){
         String[] StringArray = DBString.split("/");
-
-        for(int i = 0; i < StringArray.length; i++){
-            System.out.println(StringArray[i]);
-        }
         return StringArray;
     }
 
