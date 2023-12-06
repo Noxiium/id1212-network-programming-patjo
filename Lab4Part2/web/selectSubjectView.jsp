@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,13 +15,23 @@
     </head>
     <body>
         <h1>Hello <%= request.getAttribute("usermail") %></h1>
-        <div class = "results">
-            <h2> Check Box Example: </h2>
-            <!-- Declare input box with type as checkbox, we have also assigned name to this element-->
-            <%= request.getAttribute("usermail") %> <input type = "checkbox" name = "checkbox1" >
-            </br>
-            <%= request.getAttribute("usermail") %> <input type = "checkbox" name = "checkbox2" >
-            <p id = "result"> </p>
-            </div>
+
+
+        <form action="SelectSubjectServlet" method="get">
+            <c:forEach items="${list}" var="element">  
+                <label>
+                    <input type="radio" name="selectedSubject" value="${element.subjectID}">
+                    ${element.subjectText}
+                    <input type="hidden" name="subjectText_${element.subjectID}" value="${element.subjectText}">
+                </label><br>
+            </c:forEach>
+            <input type="submit" value="Select subject">
+        </form>
     </body>
 </html>
+
+
+
+
+
+
