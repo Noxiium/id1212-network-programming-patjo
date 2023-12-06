@@ -19,7 +19,6 @@ public class QuestionDTO {
     }
 
     private void changeCorrectAnswerFormat(){
-
         for(int i = 0; i < 3; i++){
             if (this.correctAnswerIndexes[i].equals("1")){
                 this.correctAnswerIndexes[i] = "true";

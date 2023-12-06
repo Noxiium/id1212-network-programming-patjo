@@ -31,16 +31,15 @@ public class QuestionServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-
         HttpSession session = request.getSession(false);
 
         if(session == null){
             request.getRequestDispatcher("loginView.jsp").forward(request, response);
         
-        } else{
+        } 
+        else{
             GameSessionModel model = getOrCreateSessionModel(request);
 
             if(!isFirstCall){
@@ -48,38 +47,30 @@ public class QuestionServlet extends HttpServlet {
                 answers[0] = (request.getParameter("option1") != null) ? request.getParameter("option1") : "null";
                 answers[1] = (request.getParameter("option2") != null) ? request.getParameter("option2") : "null";
                 answers[2] = (request.getParameter("option3") != null) ? request.getParameter("option3") : "null";
-
                 model.checkUserAnswer(answers);
-           
             }
 
             if(model.questionsID.isEmpty()){
                 String userId = (String)session.getAttribute("userId");
-             // TODO skriva resultat till DB
-             model.updateResultInDB(userId);
-             // Skicka ny vy till användare
-
-            request.getRequestDispatcher("resultView.jsp").forward(request, response);
-
+                model.updateResultInDB(userId);
+                request.getRequestDispatcher("resultView.jsp").forward(request, response);
             }
             else{
-            try{
-                model.fetchNextQuestionsFromDB();
-                String text = model.currQuestionDTO.getText();
-                String[] options = model.currQuestionDTO.getOptions();
+                try{
+                    model.fetchNextQuestionsFromDB();
+                    String text = model.currQuestionDTO.getText();
+                    String[] options = model.currQuestionDTO.getOptions();
 
-                request.setAttribute("text", text);
-                request.setAttribute("option1", options[0]);
-                request.setAttribute("option2", options[1]);
-                request.setAttribute("option3", options[2]);
+                    request.setAttribute("text", text);
+                    request.setAttribute("option1", options[0]);
+                    request.setAttribute("option2", options[1]);
+                    request.setAttribute("option3", options[2]);
 
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-
                 request.getRequestDispatcher("questionView.jsp").forward(request, response);
             }
-        
             isFirstCall = false;
         }
     }
@@ -99,16 +90,6 @@ public class QuestionServlet extends HttpServlet {
     }
 
     /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-    /**
      * Returns the model associated with the current session, or create a new
      * one if none existed.
      *
@@ -126,11 +107,6 @@ public class QuestionServlet extends HttpServlet {
             model = new GameSessionModel();
             session.setAttribute("gameSessionModel", model);
         }
-
-
-
-
         return model;
     }
-
 }

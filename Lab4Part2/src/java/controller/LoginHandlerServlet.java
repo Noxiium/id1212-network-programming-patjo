@@ -37,38 +37,22 @@ public class LoginHandlerServlet extends HttpServlet {
         
         try{
            int userID = model.handleLoginInPostRequest(userMail, userPassword);
-        if(userID == -1){
-            request.getRequestDispatcher("wrongPasswordView.jsp").forward(request, response);
-        }
-        else{
-            String ID = String.valueOf(userID);
-            HttpSession session = request.getSession(false);
-            session.setAttribute("userId", ID);
-
-            // TODO Call model, get QUIZZES from DB.
-            // Send the quizzes as attributes to VIEW.
-            ArrayList<SubjectDTO> subjectList = model.getQuizSubjectFromDB();
-            request.setAttribute("list", subjectList);
-            /* 
-            for(int i = 0; i < subjectList.size(); i++){
-                //request.setAttribute("subjectText" + String.valueOf(i), subjectList.get(i).getSubjectText());
-                //request.setAttribute("subjectID" + String.valueOf(i), subjectList.get(i).getSubjectID());
-             
+            if(userID == -1){
+                request.getRequestDispatcher("wrongPasswordView.jsp").forward(request, response);
             }
-            */
-            //request.setAttribute("listSize",subjectList.size());
-            request.getRequestDispatcher("selectSubjectView.jsp").forward(request, response);
-        }
+            else{
+                String ID = String.valueOf(userID);
+                HttpSession session = request.getSession(false);
+                session.setAttribute("userId", ID);
+
+                ArrayList<SubjectDTO> subjectList = model.getQuizSubjectFromDB();
+                request.setAttribute("list", subjectList);
+        
+                request.getRequestDispatcher("selectSubjectView.jsp").forward(request, response);
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
-        
-        
-
-        
-        
-        
-
     }
 
     /**
@@ -93,10 +77,3 @@ public class LoginHandlerServlet extends HttpServlet {
         return model;
     }
 }
-
-//
-// Kod för att skriva till databas.
-//Class.forName("org.apache.derby.jdbc.ClientDriver");        
-//Connection conn = (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/Derby", "patjo", "patjo");      
-//Statement statement = conn.createStatement();           
-//statement.executeUpdate("INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES('"+ userInput +"', 'password')");

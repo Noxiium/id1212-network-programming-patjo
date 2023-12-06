@@ -24,12 +24,10 @@ public class GameSessionModel{
                 return;
         }
         this.totalScore = this.totalScore + 2;
-        System.out.println("TotalScore = " + totalScore);
     }
 
     public void updateResultInDB(String quizID){
         
-
     }
     
     public void fetchQuestionsIDFromDB(String quizID) throws SQLException{

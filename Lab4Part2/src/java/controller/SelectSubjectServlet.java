@@ -46,9 +46,6 @@ public class SelectSubjectServlet extends HttpServlet {
 
                 GameSessionModel model = getOrCreateSessionModel(request);
                 
-
-
-                
                 response.setContentType("text/html;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) {
                     model.fetchQuestionsIDFromDB(selectedSubjectID);
