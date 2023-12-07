@@ -2,23 +2,18 @@ package servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.*;
 import model.Model;
-//kommentar
-@WebServlet(name = "Controller", urlPatterns = {"/Controller", "/"})
+
 public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        
+
         // Retrieve the model associated with the current session,
         // or a new one if none existed.
         Model model = getOrCreateSessionModel(request);
@@ -61,10 +56,6 @@ public class Controller extends HttpServlet {
 
             request.getRequestDispatcher("gameView.jsp").forward(request, response);
         }
-        
-        
-        
-
     }
 
     /**
@@ -92,10 +83,3 @@ public class Controller extends HttpServlet {
         return model;
     }
 }
-
-//
-// Kod för att skriva till databas.
-//Class.forName("org.apache.derby.jdbc.ClientDriver");        
-//Connection conn = (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/Derby", "patjo", "patjo");      
-//Statement statement = conn.createStatement();           
-//statement.executeUpdate("INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES('"+ userInput +"', 'password')");

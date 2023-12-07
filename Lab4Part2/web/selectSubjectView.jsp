@@ -12,6 +12,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>The ultimate Quiz Game!</title>
+        <script>
+        function toMainView() {
+            window.location.href = 'mainView.jsp';
+        }
+    </script>
     </head>
     <body>
         <h1>Select a subject</h1>
@@ -26,6 +31,7 @@
                 </label><br>
             </c:forEach>
             <input type="submit" value="Select subject">
+            <input type="button" value="Main view" onclick="toMainView()">
         </form>
     </body>
 </html>
