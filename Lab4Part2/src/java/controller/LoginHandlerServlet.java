@@ -46,9 +46,9 @@ public class LoginHandlerServlet extends HttpServlet {
                 session.setAttribute("userId", ID);
 
                 ArrayList<SubjectDTO> subjectList = model.getQuizSubjectFromDB();
-                request.setAttribute("list", subjectList);
+                session.setAttribute("list", subjectList);
         
-                request.getRequestDispatcher("selectSubjectView.jsp").forward(request, response);
+                request.getRequestDispatcher("mainView.jsp").forward(request, response);
             }
         } catch (Exception e){
             e.printStackTrace();

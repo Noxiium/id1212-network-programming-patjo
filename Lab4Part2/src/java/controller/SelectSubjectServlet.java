@@ -41,6 +41,7 @@ public class SelectSubjectServlet extends HttpServlet {
                 
             } else{
 
+                System.out.println("SelectsubjectView wihoo");
                 this.selectedSubjectID = request.getParameter("selectedSubject");
                 this.selectedSubjectText = request.getParameter("subjectText_" + selectedSubjectID);
 
