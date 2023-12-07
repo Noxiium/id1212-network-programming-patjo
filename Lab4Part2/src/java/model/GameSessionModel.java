@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.sql.*;
-
+import javax.persistence.*;
 
 
 
@@ -34,9 +34,33 @@ public class GameSessionModel{
 
     public void updateResultInDB(String userID) throws SQLException{
         
-        Statement statement = connectToDB();  
-        statement.executeUpdate("INSERT INTO APP.RESULTS (USER_ID, QUIZ_ID, SCORE) VALUES("+ userID +", " + this.quizID +"," + String.valueOf(this.totalScore) + ")");
+        //Statement statement = connectToDB();  
+        //statement.executeUpdate("INSERT INTO APP.RESULTS (USER_ID, QUIZ_ID, SCORE) VALUES("+ userID +", " + this.quizID +"," + String.valueOf(this.totalScore) + ")");
+        
+        
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab4Part2-persistence-unit");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        
+        Result result = new Result();
+        result.setUserId(Integer.parseInt(userID));
+        result.setQuizId(Integer.parseInt(this.quizID));
+        result.setScore(totalScore);
+        
+        System.out.println(Integer.parseInt(userID));
+        System.out.println(Integer.parseInt(this.quizID));
+        System.out.println(totalScore);
+        // Börja en transaktion
+        entityManager.getTransaction().begin();
 
+        // Spara result i databasen
+        entityManager.persist(result);
+
+        // Commita transaktionen
+        entityManager.getTransaction().commit();
+
+        // Stäng EntityManager
+        entityManager.close();
+        entityManagerFactory.close();
     }
     
     public void fetchQuestionsIDFromDB(String quizID) throws SQLException{
