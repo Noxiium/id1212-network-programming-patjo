@@ -8,61 +8,94 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
-
-@WebServlet(name = "Controller", urlPatterns = {"/Controller"})
+import model.Model;
+//kommentar
+@WebServlet(name = "Controller", urlPatterns = {"/Controller", "/"})
 public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //Get or create a session for the current client 
-        HttpSession session = request.getSession(true);
-
-        //Retrieve the model associated with the current session,
-        //or create a new one if none existed.
-        /* Model model = (Model) session.getAttribute("model");
-        if (model == null) {
-            model = new Model();
-            session.setAttribute("model", model);
-        }
-         */
+        
+        
+        
+        // Retrieve the model associated with the current session,
+        // or a new one if none existed.
+        Model model = getOrCreateSessionModel(request);
+        System.out.println("Contr: doGet");
+        System.out.println("Session ID: " +  request.getSession().getId());
+        System.out.println("Contr: model.getRandomNumber = " +model.getRandomNumer());
+        System.out.println("________________________________________________________");
+        
+        int numberOfGuessesMade = model.getNumberOfGuesses();
+        request.setAttribute("numberOfGuessesMade", numberOfGuessesMade);
         //Forward request to index.jsp
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("gameView.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        // Retrieve the model associated with the current session,
+        // or a new one if none existed.
+        Model model = getOrCreateSessionModel(request);
+        System.out.println("Contr: doPost");
+        System.out.println("Session ID: " +  request.getSession().getId());
+        System.out.println("Contr: model.getRandomNumber = " +model.getRandomNumer());
+        System.out.println("________________________________________________________");
         String userInput = request.getParameter("guess");
         request.setAttribute("guess", userInput);
 
+        // Retrieve the number of guesses made from the Model associated with the current session,
+        // and set it as an attribute in the request for display in the JSP
+        boolean isCorrectAnswer = model.checkAnswer(Integer.parseInt(userInput));
+        int numberOfGuessesMade = model.getNumberOfGuesses();
+        request.setAttribute("numberOfGuessesMade", numberOfGuessesMade);
+        
+        if(isCorrectAnswer){
+            model.restart();
+            request.getRequestDispatcher("endOfGameView.jsp").forward(request, response);
+
+        } else{
+
+            request.getRequestDispatcher("gameView.jsp").forward(request, response);
+        }
+        
+        
         
 
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/Derby", "patjo", "patjo");
+    }
 
-            //String query = "INSERT INTO APP.USERS(USERNAME, PASSWORD) VALUES (?,?)";
+    /**
+     * Returns the model associated with the current session, or create a new
+     * one if none existed.
+     *
+     * @param request
+     * @return model
+     */
+    private Model getOrCreateSessionModel(HttpServletRequest request) {
 
-            //PreparedStatement preparedStatement = conn.prepareStatement(query);
-            //preparedStatement.setString(1, "hej");    // NAME
-            //preparedStatement.setString(2, "password"); // PASSWORD
-            //preparedStatement.executeUpdate();
-       
+        System.out.println("Contr: getOrCreateSessionModel");
+        // Get or create a session for the current client 
+        HttpSession session = request.getSession(true);
 
-            //preparedStatement.close();
-            
-            Statement statement = conn.createStatement();
-            statement.executeUpdate("INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES('"+ userInput +"', 'password')");
-            //statement.executeUpdate("INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES('"+userInput+"', 'test')");
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("hello");
+        // Retrieve the model associated with the current session,
+        // or create a new one if none existed.
+        Model model = (Model) session.getAttribute("model");
+        if (model == null) {
+            model = new Model();
+            session.setAttribute("model", model);
         }
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-
+        System.out.println("Session ID: " +  request.getSession().getId());
+        System.out.println("________________________________________________________");
+        return model;
     }
 }
+
+//
+// Kod för att skriva till databas.
+//Class.forName("org.apache.derby.jdbc.ClientDriver");        
+//Connection conn = (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/Derby", "patjo", "patjo");      
+//Statement statement = conn.createStatement();           
+//statement.executeUpdate("INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES('"+ userInput +"', 'password')");

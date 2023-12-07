@@ -6,4 +6,8 @@ password.txt
 **/build/
 **/nbproject
 **/test/
+**/dist/
+**/build/
+**/nbproject
+**/test/
 **/build.xml
