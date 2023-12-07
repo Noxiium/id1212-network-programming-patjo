@@ -8,9 +8,9 @@
     </head>
     <body>
         <h1>Quiz Results</h1>
+     
 
-
-        <table border="1">
+        <table border="1" cellspacing="2" cellpadding="3">
             <thead>
                 <tr>
                     <th>User</th>
