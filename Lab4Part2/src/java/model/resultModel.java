@@ -19,6 +19,7 @@ public class ResultModel {
     public ArrayList<ResultTableDTO> ResultHistoryList;
     
     public ArrayList<ResultTableDTO> getResultHistoryList(){return ResultHistoryList;}
+    
     public ResultModel() {
         this.ResultHistoryList = new ArrayList<ResultTableDTO>();
     }
