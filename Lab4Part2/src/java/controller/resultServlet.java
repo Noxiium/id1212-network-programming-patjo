@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author PC
  */
-public class resultServlet extends HttpServlet {
+public class ResultServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

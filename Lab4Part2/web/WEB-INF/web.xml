@@ -13,12 +13,8 @@
         <servlet-class>controller.QuestionServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>mainMenuServlet</servlet-name>
-        <servlet-class>controller.mainMenuServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>resultServlet</servlet-name>
-        <servlet-class>controller.resultServlet</servlet-class>
+        <servlet-name>ResultServlet</servlet-name>
+        <servlet-class>controller.ResultServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginHandlerServlet</servlet-name>
@@ -34,12 +30,8 @@
         <url-pattern>/QuestionServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>mainMenuServlet</servlet-name>
-        <url-pattern>/mainMenuServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>resultServlet</servlet-name>
-        <url-pattern>/resultServlet</url-pattern>
+        <servlet-name>ResultServlet</servlet-name>
+        <url-pattern>/ResultServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

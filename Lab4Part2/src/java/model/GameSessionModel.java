@@ -32,8 +32,11 @@ public class GameSessionModel{
         this.totalScore = this.totalScore + 2;
     }
 
-    public void updateResultInDB(String quizID){
+    public void updateResultInDB(String userID) throws SQLException{
         
+        Statement statement = connectToDB();  
+        statement.executeUpdate("INSERT INTO APP.RESULTS (USER_ID, QUIZ_ID, SCORE) VALUES("+ userID +", " + this.quizID +"," + String.valueOf(this.totalScore) + ")");
+
     }
     
     public void fetchQuestionsIDFromDB(String quizID) throws SQLException{
