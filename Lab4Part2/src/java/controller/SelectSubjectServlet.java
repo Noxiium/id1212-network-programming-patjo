@@ -37,8 +37,7 @@ public class SelectSubjectServlet extends HttpServlet {
                 request.getRequestDispatcher("loginView.jsp").forward(request, response);
                 
             } else{
-
-                System.out.println("SelectsubjectView wihoo");
+                
                 String selectedSubjectID = request.getParameter("selectedSubject");
                 String selectedSubjectText = request.getParameter("subjectText_" + selectedSubjectID);
                 GameSessionModel model = getOrCreateSessionModel(request);
@@ -51,6 +50,10 @@ public class SelectSubjectServlet extends HttpServlet {
                     }
                     else{
                         model.fetchQuestionsIDFromDB(selectedSubjectID);
+                        
+                        String source = request.getParameter("source");
+                        request.setAttribute("source", source);
+                        
                         RequestDispatcher dispatcher = request.getRequestDispatcher("/QuestionServlet");
                         dispatcher.forward(request, response);
                     }
