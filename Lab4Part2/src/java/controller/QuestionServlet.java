@@ -19,7 +19,7 @@ import model.GameSessionModel;
  * @author Indiana Johan
  */
 public class QuestionServlet extends HttpServlet {
-    private boolean isFirstCall = true;
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,8 +41,9 @@ public class QuestionServlet extends HttpServlet {
         } 
         else{
             GameSessionModel model = getOrCreateSessionModel(request);
+            String source = (String) request.getAttribute("source");
 
-            if(!isFirstCall){
+            if(!"receiveFirstQuestion".equals(source)){
                 String[] answers = new String[3];
                 answers[0] = (request.getParameter("option1") != null) ? request.getParameter("option1") : "null";
                 answers[1] = (request.getParameter("option2") != null) ? request.getParameter("option2") : "null";
@@ -57,6 +58,7 @@ public class QuestionServlet extends HttpServlet {
                 request.setAttribute("totalScore", model.getTotalScore());
                 model.resetTotalScore();
                 request.getRequestDispatcher("resultView.jsp").forward(request, response);
+                
                 } catch(Exception e){
                 e.printStackTrace();
                 }
@@ -78,7 +80,7 @@ public class QuestionServlet extends HttpServlet {
                 }
                 request.getRequestDispatcher("questionView.jsp").forward(request, response);
             }
-            isFirstCall = false;
+            
         }
     }
 
