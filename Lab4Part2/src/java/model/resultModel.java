@@ -16,18 +16,20 @@ import java.util.ArrayList;
  * @author PC
  */
 public class ResultModel {
-    public ArrayList<ResultTableDTO> resultList;
+    public ArrayList<ResultTableDTO> ResultHistoryList;
     
+    public ArrayList<ResultTableDTO> getResultHistoryList(){return ResultHistoryList;}
     public ResultModel() {
-        this.resultList = new ArrayList<ResultTableDTO>();
+        this.ResultHistoryList = new ArrayList<ResultTableDTO>();
     }
 
     public void fetchResultsFromDB() throws SQLException {
+        ResultHistoryList.clear();
         String userName;
         String quizSubject;
         String score;
         Statement statement = connectToDB();
-        ResultSet queryResult = statement.executeQuery("SELECT USER_ID, QUIZ_ID, SCORE FROM APP.RESULT");
+        ResultSet queryResult = statement.executeQuery("SELECT USER_ID, QUIZ_ID, SCORE FROM APP.RESULTS");
 
         while (queryResult.next()) {
             String user_id = queryResult.getString("USER_ID");
@@ -36,7 +38,7 @@ public class ResultModel {
             userName = fetchUserNameFromDB(user_id);
             quizSubject = fetchQuizSubjectTextFromDB(quiz_id);
             ResultTableDTO result = new ResultTableDTO(userName, quizSubject, score);
-            resultList.add(result);
+            ResultHistoryList.add(result);
         }
     }
 

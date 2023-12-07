@@ -1,12 +1,14 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.ResultModel;
+import model.ResultTableDTO;
 
 /**
  *
@@ -34,14 +36,22 @@ public class ResultServlet extends HttpServlet {
         } else {
             
             ResultModel model = getOrCreateSessionModel(request);
-            ArrayList<Object> historyResult = model.fetchResultsFromDB();
+            try{
+            model.fetchResultsFromDB();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            ArrayList<ResultTableDTO> historyResult = model.getResultHistoryList();
            
-            request.setAttribute("list", historyResult);
+            request.setAttribute("list2", historyResult);
             
             request.getRequestDispatcher("historyResultView.jsp").forward(request, response);
         }
     }
-
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       processRequest(request,response);
+    }
     
     
      private ResultModel getOrCreateSessionModel(HttpServletRequest request) {

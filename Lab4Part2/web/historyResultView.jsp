@@ -11,11 +11,11 @@
 
 
         <table border="1">
-            <c:forEach items="${list}" var="element">  
+            <c:forEach items="${list2}" var="element">  
                 <tr>
                     <td>${element.userName}</td>
                     <td>${element.quizSubject}</td>
-                    <td>${element.score}</td>
+                    <td>${element.totalScore}</td>
                 </tr>
             </c:forEach>
         </table>
@@ -27,7 +27,7 @@
 
         <ul>
             <li> <a href="http://localhost:8080/Lab4Part2/SelectSubjectServlet">Quizzes</a></li> 
-            <li><a href="https://localhost:8080/Lab4Part2/ResultServlet">Past results</a></li>
+            <li><a href="http://localhost:8080/Lab4Part2/ResultServlet">Past results</a></li>
         </ul>
 
 
