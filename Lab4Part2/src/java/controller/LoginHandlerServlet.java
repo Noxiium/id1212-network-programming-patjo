@@ -44,10 +44,6 @@ public class LoginHandlerServlet extends HttpServlet {
                 String ID = String.valueOf(userID);
                 HttpSession session = request.getSession(false);
                 session.setAttribute("userId", ID);
-
-                ArrayList<SubjectDTO> subjectList = model.getQuizSubjectFromDB();
-                session.setAttribute("list", subjectList);
-        
                 request.getRequestDispatcher("mainView.jsp").forward(request, response);
             }
         } catch (Exception e){

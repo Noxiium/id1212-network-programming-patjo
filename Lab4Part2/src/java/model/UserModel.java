@@ -20,19 +20,7 @@ public class UserModel {
         return this.userMail;
     }
 
-    public ArrayList<SubjectDTO> getQuizSubjectFromDB() throws SQLException{
-        ArrayList<SubjectDTO> subjectList = new ArrayList<SubjectDTO>();
-        Statement statement = connectToDB();  
-        ResultSet queryResult = statement.executeQuery("SELECT ID, SUBJECT FROM APP.QUIZZES");
-        
-        while (queryResult.next()) {
-            String subjectText = queryResult.getString("SUBJECT");
-            int subjectID = queryResult.getInt("ID");
-            SubjectDTO subject = new SubjectDTO(subjectText, subjectID);
-            subjectList.add(subject);
-        }
-        return subjectList;
-    }
+    
 
     public int handleLoginInPostRequest(String userMail, String userPassword) throws SQLException{
         Statement statement = connectToDB();   

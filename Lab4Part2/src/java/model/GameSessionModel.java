@@ -62,6 +62,20 @@ public class GameSessionModel{
         this.currQuestionDTO = new QuestionDTO(text, options, answers);
         questionsID.remove(0);
     }
+    
+    public ArrayList<SubjectDTO> getQuizSubjectFromDB() throws SQLException{
+        ArrayList<SubjectDTO> subjectList = new ArrayList<SubjectDTO>();
+        Statement statement = connectToDB();  
+        ResultSet queryResult = statement.executeQuery("SELECT ID, SUBJECT FROM APP.QUIZZES");
+        
+        while (queryResult.next()) {
+            String subjectText = queryResult.getString("SUBJECT");
+            int subjectID = queryResult.getInt("ID");
+            SubjectDTO subject = new SubjectDTO(subjectText, subjectID);
+            subjectList.add(subject);
+        }
+        return subjectList;
+    }
 
     private Statement connectToDB(){
         try {

@@ -14,7 +14,7 @@
         <title>The ultimate Quiz Game!</title>
     </head>
     <body>
-        <h1>Hello <%= request.getAttribute("usermail") %></h1>
+        <h1>Select a subject</h1>
 
 
         <form action="SelectSubjectServlet" method="get">

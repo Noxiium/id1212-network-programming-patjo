@@ -4,6 +4,8 @@
  */
 package controller;
 
+import java.util.ArrayList;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -14,13 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.GameSessionModel;
+import model.SubjectDTO;
 /**
  *
  * @author Indiana Johan
  */
 public class SelectSubjectServlet extends HttpServlet {
-    private String selectedSubjectID;
-    private String selectedSubjectText;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,17 +43,22 @@ public class SelectSubjectServlet extends HttpServlet {
             } else{
 
                 System.out.println("SelectsubjectView wihoo");
-                this.selectedSubjectID = request.getParameter("selectedSubject");
-                this.selectedSubjectText = request.getParameter("subjectText_" + selectedSubjectID);
-
+                String selectedSubjectID = request.getParameter("selectedSubject");
+                String selectedSubjectText = request.getParameter("subjectText_" + selectedSubjectID);
                 GameSessionModel model = getOrCreateSessionModel(request);
+                try{
+                    if(selectedSubjectID == null){
+                   
+                        ArrayList<SubjectDTO> subjectList = model.getQuizSubjectFromDB();
+                        session.setAttribute("list", subjectList);
+                        request.getRequestDispatcher("selectSubjectView.jsp").forward(request, response);
+                    }
+                    else{
+                        model.fetchQuestionsIDFromDB(selectedSubjectID);
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/QuestionServlet");
+                        dispatcher.forward(request, response);
+                    }
                 
-                response.setContentType("text/html;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
-                    model.fetchQuestionsIDFromDB(selectedSubjectID);
-
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/QuestionServlet");
-                    dispatcher.forward(request, response);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
