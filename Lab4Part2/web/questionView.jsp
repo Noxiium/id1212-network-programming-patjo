@@ -18,9 +18,9 @@
 
 
         <form action="QuestionServlet" method="get">
-                    <p> <%= request.getAttribute("option1") %> <input type="checkbox" name="option1" value="true"> </p>
-                    <p> <%= request.getAttribute("option2") %> <input type="checkbox" name="option2" value="true"> </p>
-                    <p> <%= request.getAttribute("option3") %> <input type="checkbox" name="option3" value="true"> </p>
+                    <p> <input type="checkbox" name="option1" value="true"> <%= request.getAttribute("option1") %>  </p>
+                    <p> <input type="checkbox" name="option2" value="true"> <%= request.getAttribute("option2") %> </p>
+                    <p> <input type="checkbox" name="option3" value="true"> <%= request.getAttribute("option3") %>  </p>
                     
             <input type="submit" value="Submit answer">
         </form>
