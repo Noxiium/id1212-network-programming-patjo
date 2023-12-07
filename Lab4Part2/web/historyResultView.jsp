@@ -34,7 +34,6 @@
 
         <ul>
             <li> <a href="http://localhost:8080/Lab4Part2/SelectSubjectServlet">Quizzes</a></li> 
-            <li><a href="http://localhost:8080/Lab4Part2/ResultServlet">Past results</a></li>
         </ul>
 
 

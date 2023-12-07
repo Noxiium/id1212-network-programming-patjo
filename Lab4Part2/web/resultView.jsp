@@ -10,14 +10,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>The ultimate Quiz Game!</title>
+           <script>
+        function toMainView() {
+            window.location.href = 'mainView.jsp';
+        }
+    </script>
     </head>
     <body>
         <h1>Good Job!</h1>
         <h3>Your score is:  <%= request.getAttribute("totalScore") %></h3>
         
-          <form action="SelectSubjectServlet" method="get">
+        <form action="SelectSubjectServlet" method="get">
               <input type="submit" value="Play again">
         </form>
-        
+            <input type="button" value="Main view" onclick="toMainView()">
+       
     </body>
 </html>
+
