@@ -16,7 +16,13 @@ public class GameSessionModel{
         this.totalScore = 0;
         this.questionsID = new ArrayList<String>() ;
     }
-
+    
+    
+    public int getTotalScore(){
+    return this.totalScore;
+    }
+    
+    
     // {"true", null, null}
     public void checkUserAnswer(String[] userAnswer){
         for(int i = 0; i < 3; i++){

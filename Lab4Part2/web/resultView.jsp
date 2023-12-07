@@ -13,5 +13,11 @@
     </head>
     <body>
         <h1>Good Job!</h1>
+        <h3>Your score is:  <%= request.getAttribute("totalScore") %></h3>
+        
+          <form action="SelectSubjectServlet" method="get">
+            <input type="submit" value="Play again">
+        </form>
+        
     </body>
 </html>
