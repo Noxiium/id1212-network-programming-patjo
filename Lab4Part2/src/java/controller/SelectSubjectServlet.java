@@ -46,12 +46,11 @@ public class SelectSubjectServlet extends HttpServlet {
 
                 GameSessionModel model = getOrCreateSessionModel(request);
                 
-                response.setContentType("text/html;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
+                try {
                     model.fetchQuestionsIDFromDB(selectedSubjectID);
-
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/QuestionServlet");
                     dispatcher.forward(request, response);
+                    
                 } catch (Exception e){
                     e.printStackTrace();
                 }
