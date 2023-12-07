@@ -52,10 +52,15 @@ public class QuestionServlet extends HttpServlet {
 
             if(model.questionsID.isEmpty()){
                 String userId = (String)session.getAttribute("userId");
+                try{
                 model.updateResultInDB(userId);
                 request.setAttribute("totalScore", model.getTotalScore());
                 model.resetTotalScore();
                 request.getRequestDispatcher("resultView.jsp").forward(request, response);
+                } catch(Exception e){
+                e.printStackTrace();
+                }
+                    
             }
             else{
                 try{
