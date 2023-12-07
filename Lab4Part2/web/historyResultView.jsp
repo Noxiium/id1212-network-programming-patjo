@@ -11,6 +11,13 @@
 
 
         <table border="1">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Quiz Subject</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
             <c:forEach items="${list2}" var="element">  
                 <tr>
                     <td>${element.userName}</td>
