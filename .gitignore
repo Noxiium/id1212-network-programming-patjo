@@ -2,8 +2,8 @@
 **/target/
 **/.DS_Store
 password.txt
-/Lab4Part1/dist/
-/Lab4Part1/build/
-/Lab4Part1/nbproject
-/Lab4Part1/test/
+**/dist/
+**/build/
+**/nbproject
+**/test/
 **/build.xml
