@@ -54,6 +54,7 @@ public class QuestionServlet extends HttpServlet {
                 String userId = (String)session.getAttribute("userId");
                 model.updateResultInDB(userId);
                 request.setAttribute("totalScore", model.getTotalScore());
+                model.resetTotalScore();
                 request.getRequestDispatcher("resultView.jsp").forward(request, response);
             }
             else{

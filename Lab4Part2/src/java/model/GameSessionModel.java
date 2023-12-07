@@ -76,6 +76,10 @@ public class GameSessionModel{
         }
         return subjectList;
     }
+    
+    public void resetTotalScore(){
+        this.totalScore = 0;
+    }
 
     private Statement connectToDB(){
         try {
