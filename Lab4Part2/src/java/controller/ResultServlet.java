@@ -29,6 +29,7 @@ public class ResultServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
+        System.out.println("SessionId: " + session.getId());
 
         if (session == null) {
             request.getRequestDispatcher("loginView.jsp").forward(request, response);

@@ -1,16 +1,12 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.SubjectDTO;
 import model.UserModel;
 
 public class LoginHandlerServlet extends HttpServlet {
@@ -60,9 +56,10 @@ public class LoginHandlerServlet extends HttpServlet {
      */
     private UserModel getOrCreateSessionModel(HttpServletRequest request) {
 
+        System.out.println("getOrCreateModel");
         // Get or create a session for the current client 
         HttpSession session = request.getSession(true);
-
+        System.out.println("SessionId: " + session.getId());
         // Retrieve the model associated with the current session,
         // or create a new one if none existed.
         UserModel model = (UserModel) session.getAttribute("model");

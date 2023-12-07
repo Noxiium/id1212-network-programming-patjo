@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import java.util.ArrayList;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +31,7 @@ public class SelectSubjectServlet extends HttpServlet {
         
             
         HttpSession session = request.getSession(false);
+        System.out.println("SessionId: " + session.getId());
         
             if(session == null){
                 request.getRequestDispatcher("loginView.jsp").forward(request, response);
