@@ -32,57 +32,9 @@ public class Result implements Serializable {
         // Default constructor needed by JPA
     }
 
-    
-    public Integer getId() {
-        return id;
-    }
+    public void setId(Integer id) { this.id = id;}
+    public void setUserId(Integer userId) {this.userId = userId;}
+    public void setQuizId(Integer quizId) {this.quizId = quizId;}
+    public void setScore(Integer score) {this.score = score;}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getQuizId() {
-        return quizId;
-    }
-
-    public void setQuizId(Integer quizId) {
-        this.quizId = quizId;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Result)) {
-            return false;
-        }
-        Result other = (Result) object;
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-    }
-
-    @Override
-    public String toString() {
-        return "model.Result[ id=" + id + " ]";
-    }
 }
