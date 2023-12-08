@@ -48,8 +48,11 @@ public class Controller extends HttpServlet {
         int numberOfGuessesMade = model.getNumberOfGuesses();
         request.setAttribute("numberOfGuessesMade", numberOfGuessesMade);
         
+        // If the user input matches the generated random number, the game is reset,
+        // and the request is forwarded to the 'endOfGameView' .
+        // Otherwise, forward the request to the 'gameView'.  
         if(isCorrectAnswer){
-            model.restart();
+            model.restart(); // Reset the game for a new round.
             request.getRequestDispatcher("endOfGameView.jsp").forward(request, response);
 
         } else{
@@ -67,7 +70,6 @@ public class Controller extends HttpServlet {
      */
     private Model getOrCreateSessionModel(HttpServletRequest request) {
 
-        System.out.println("Contr: getOrCreateSessionModel");
         // Get or create a session for the current client 
         HttpSession session = request.getSession(true);
 
