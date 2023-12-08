@@ -25,6 +25,7 @@
                     <input type="hidden" name="subjectText_${element.subjectID}" value="${element.subjectText}">
                 </label><br>
             </c:forEach>
+             <input type="hidden" name="source" value="receiveFirstQuestion">
             <input type="submit" value="Select subject">
             <input type="button" value="Main view" onclick="toMainView()">
         </form>

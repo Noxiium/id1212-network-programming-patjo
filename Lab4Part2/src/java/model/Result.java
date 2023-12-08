@@ -1,41 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "RESULTS")
-public class Result {
+@Table(name = "APP.RESULTS")
+public class Result implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    @Column(name = "ID")
+    private Integer id;
 
     @Column(name = "USER_ID")
-    private int USER_ID;
-    
+    private Integer userId;
+
     @Column(name = "QUIZ_ID")
-    private int QUIZ_ID;
-     
-    private int SCORE;
-    
-    public Result(){
-      
-    }
-    
-    public void setUserId(int userId) {
-        this.USER_ID = userId;
+    private Integer quizId;
+
+    @Column(name = "SCORE")
+    private Integer score;
+
+    public Result() {
+        // Default constructor needed by JPA
     }
 
-    public void setQuizId(int quizId) {
-        this.QUIZ_ID = quizId;
-    }
-
-    public void setScore(int score) {
-        this.SCORE = score;
-    }
+    public void setId(Integer id) { this.id = id;}
+    public void setUserId(Integer userId) {this.userId = userId;}
+    public void setQuizId(Integer quizId) {this.quizId = quizId;}
+    public void setScore(Integer score) {this.score = score;}
 
 }

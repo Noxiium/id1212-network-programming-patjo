@@ -1,5 +1,5 @@
 <%-- 
-     Main View page for the Guess Number Game.
+     gameView is the main view page for the Guess Number Game.
     - Includes a form enabling users to submit guesses, with restrictions to numbers between 1 and 100.
     - Conditional rendering based on the presence of the 'guess' and 'numberOfGuessesMade' parameters.
 --%>

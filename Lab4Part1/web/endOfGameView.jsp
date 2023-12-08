@@ -1,3 +1,8 @@
+<%-- endOfGameView is displayed upon completing a game.
+     - Displays the total number of guesses made. 
+     - The user is then given the option to play the game again --%>
+
+
 <html>
 <head>
     <title>Guess Number Game!</title>

@@ -1,6 +1,10 @@
 package model;
 
-public class SubjectDTO {
+import java.io.Serializable;
+
+public class SubjectDTO implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
     private String subjectText;
     private int subjectID;
 

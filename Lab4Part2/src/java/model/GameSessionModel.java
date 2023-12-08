@@ -34,34 +34,35 @@ public class GameSessionModel{
 
     public void updateResultInDB(String userID) throws SQLException{
         
+        /*------ SQL QUERY ----*/
         //Statement statement = connectToDB();  
         //statement.executeUpdate("INSERT INTO APP.RESULTS (USER_ID, QUIZ_ID, SCORE) VALUES("+ userID +", " + this.quizID +"," + String.valueOf(this.totalScore) + ")");
         
-        
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Lab4Part2-persistence-unit");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        
+        /*------- JPA --------*/
+        EntityManager entityManager = Persistence.createEntityManagerFactory("Lab4Part2PU").createEntityManager();
+
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+    try{
         Result result = new Result();
-        result.setUserId(Integer.parseInt(userID));
-        result.setQuizId(Integer.parseInt(this.quizID));
-        result.setScore(totalScore);
-        
-        System.out.println(Integer.parseInt(userID));
-        System.out.println(Integer.parseInt(this.quizID));
-        System.out.println(totalScore);
-        // Börja en transaktion
-        entityManager.getTransaction().begin();
+        result.setUserId(Integer.valueOf(userID));
+        result.setQuizId(Integer.valueOf(quizID));
+        result.setScore(this.totalScore);
 
-        // Spara result i databasen
         entityManager.persist(result);
-
-        // Commita transaktionen
-        entityManager.getTransaction().commit();
-
-        // Stäng EntityManager
+        entityManager.flush();
+        entityTransaction.commit();
+    } catch (Exception e) {
+        if (entityTransaction.isActive()) {
+            entityTransaction.rollback();
+        }
+        e.printStackTrace();
+    } finally {
         entityManager.close();
-        entityManagerFactory.close();
+        
     }
+}
     
     public void fetchQuestionsIDFromDB(String quizID) throws SQLException{
         this.quizID = quizID;

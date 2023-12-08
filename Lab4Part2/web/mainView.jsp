@@ -1,4 +1,8 @@
 
+<%-- This JSP view provides the user with options to navigate to different sections:
+      - Quizzes: Will show available quizzes to take
+      - Past results: Will show past quiz results for all users  --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

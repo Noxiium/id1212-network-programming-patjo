@@ -1,4 +1,7 @@
 
+<%-- This JSP view displays the result of quizzes taken by users. --%>
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -8,9 +11,9 @@
     </head>
     <body>
         <h1>Quiz Results</h1>
+     
 
-
-        <table border="1">
+        <table border="1" cellspacing="2" cellpadding="3">
             <thead>
                 <tr>
                     <th>User</th>
