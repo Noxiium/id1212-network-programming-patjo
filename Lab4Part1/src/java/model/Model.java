@@ -1,4 +1,5 @@
 package model;
+
 import java.util.Random;
 
 /**
@@ -14,7 +15,7 @@ public class Model {
     private int numberOfGuesses;
 
     /**
-     * Creates a new instance of gameModel 
+     * Creates a new instance of gameModel
      * Generates a random number, and NumberOfGuesses is set to 0
      */
     public Model() {
@@ -23,7 +24,7 @@ public class Model {
         this.numberOfGuesses = NUMBER_OF_GUESSES_START_VALUE;
     }
 
-    //Generate a random number for the current game.
+    // Generate a random number for the current game.
     private void generateRandomNumber() {
         System.out.println("Model: generateRNDNumber");
         Random rand = new Random();
@@ -31,18 +32,19 @@ public class Model {
 
     }
 
-    //Return the random number.
+    // Return the random number.
     public int getRandomNumer() {
         return this.randomNumber;
     }
 
-    //Return number of guesses made by the user in the current game.
+    // Return number of guesses made by the user in the current game.
     public int getNumberOfGuesses() {
         return this.numberOfGuesses;
     }
 
-    // Method called upon completing a game. 
-    // Restarts the game by resetting the number of guesses made, and generating a new random number.
+    // Method called upon completing a game.
+    // Restarts the game by resetting the number of guesses made, and generating a
+    // new random number.
     public void restart() {
         resetNumberOfGuesses();
         generateRandomNumber();
@@ -53,7 +55,8 @@ public class Model {
         this.numberOfGuesses = NUMBER_OF_GUESSES_START_VALUE;
     }
 
-    // Method to check if the user input matches the generated random number in the current game.
+    // Method to check if the user input matches the generated random number in the
+    // current game.
     // Increments number of guesses made
     public boolean checkAnswer(int userInput) {
         this.numberOfGuesses++;

@@ -18,44 +18,45 @@ public class Controller extends HttpServlet {
         // or a new one if none existed.
         Model model = getOrCreateSessionModel(request);
         System.out.println("Contr: doGet");
-        System.out.println("Session ID: " +  request.getSession().getId());
-        System.out.println("Contr: model.getRandomNumber = " +model.getRandomNumer());
+        System.out.println("Session ID: " + request.getSession().getId());
+        System.out.println("Contr: model.getRandomNumber = " + model.getRandomNumer());
         System.out.println("________________________________________________________");
-        
+
         int numberOfGuessesMade = model.getNumberOfGuesses();
         request.setAttribute("numberOfGuessesMade", numberOfGuessesMade);
-        //Forward request to index.jsp
+        // Forward request to index.jsp
         request.getRequestDispatcher("gameView.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         // Retrieve the model associated with the current session,
         // or a new one if none existed.
         Model model = getOrCreateSessionModel(request);
         System.out.println("Contr: doPost");
-        System.out.println("Session ID: " +  request.getSession().getId());
-        System.out.println("Contr: model.getRandomNumber = " +model.getRandomNumer());
+        System.out.println("Session ID: " + request.getSession().getId());
+        System.out.println("Contr: model.getRandomNumber = " + model.getRandomNumer());
         System.out.println("________________________________________________________");
         String userInput = request.getParameter("guess");
         request.setAttribute("guess", userInput);
 
-        // Retrieve the number of guesses made from the Model associated with the current session,
+        // Retrieve the number of guesses made from the Model associated with the
+        // current session,
         // and set it as an attribute in the request for display in the JSP
         boolean isCorrectAnswer = model.checkAnswer(Integer.parseInt(userInput));
         int numberOfGuessesMade = model.getNumberOfGuesses();
         request.setAttribute("numberOfGuessesMade", numberOfGuessesMade);
-        
+
         // If the user input matches the generated random number, the game is reset,
         // and the request is forwarded to the 'endOfGameView' .
-        // Otherwise, forward the request to the 'gameView'.  
-        if(isCorrectAnswer){
+        // Otherwise, forward the request to the 'gameView'.
+        if (isCorrectAnswer) {
             model.restart(); // Reset the game for a new round.
             request.getRequestDispatcher("endOfGameView.jsp").forward(request, response);
 
-        } else{
+        } else {
 
             request.getRequestDispatcher("gameView.jsp").forward(request, response);
         }
@@ -70,7 +71,7 @@ public class Controller extends HttpServlet {
      */
     private Model getOrCreateSessionModel(HttpServletRequest request) {
 
-        // Get or create a session for the current client 
+        // Get or create a session for the current client
         HttpSession session = request.getSession(true);
 
         // Retrieve the model associated with the current session,
@@ -80,7 +81,7 @@ public class Controller extends HttpServlet {
             model = new Model();
             session.setAttribute("model", model);
         }
-        System.out.println("Session ID: " +  request.getSession().getId());
+        System.out.println("Session ID: " + request.getSession().getId());
         System.out.println("________________________________________________________");
         return model;
     }
