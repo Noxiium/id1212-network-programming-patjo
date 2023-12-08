@@ -67,6 +67,18 @@ public class LoginHandlerServlet extends HttpServlet {
         request.getRequestDispatcher("wrongPasswordView.jsp").forward(request, response);
     }
 
+    /**
+     * Handles a successful login by setting the user ID in the session and
+     * forwarding the request to the main view.
+     *
+     * @param request  the HttpServletRequest object containing the request
+     *                 information
+     * @param response the HttpServletResponse object used to send the response
+     * @param userID   the ID of the user who successfully logged in
+     * @throws ServletException if the servlet encounters an error while handling
+     *                          the request
+     * @throws IOException      if an I/O exception occurs
+     */
     private void handleSuccessfulLogin(HttpServletRequest request, HttpServletResponse response, int userID)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
