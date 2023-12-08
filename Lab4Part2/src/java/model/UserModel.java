@@ -33,14 +33,11 @@ public class UserModel {
             Boolean correctPass = checkIfPasswordIsCorrect(userPassword, userID, statement);
             if (correctPass)
                 return userID;
-            
         }
         if (!userFound) {
             return insertUserInfoIntoDB(userMail, userPassword, statement);
-
         }
         return -1;
-
     }
 
     /**

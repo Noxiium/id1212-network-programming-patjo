@@ -32,9 +32,20 @@ public class Result implements Serializable {
         // Default constructor needed by JPA
     }
 
-    public void setId(Integer id) { this.id = id;}
-    public void setUserId(Integer userId) {this.userId = userId;}
-    public void setQuizId(Integer quizId) {this.quizId = quizId;}
-    public void setScore(Integer score) {this.score = score;}
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public void setQuizId(Integer quizId) {
+        this.quizId = quizId;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
 
 }
