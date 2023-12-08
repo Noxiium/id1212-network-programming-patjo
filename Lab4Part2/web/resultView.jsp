@@ -1,8 +1,3 @@
-<%-- 
-    Document   : resultView
-    Created on : Dec 6, 2023, 4:47:57 PM
-    Author     : Indiana Johan
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
