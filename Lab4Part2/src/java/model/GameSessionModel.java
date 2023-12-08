@@ -64,7 +64,7 @@ public class GameSessionModel{
     }
 }
     
-    public void fetchQuestionsIDFromDB(String quizID) throws SQLException{
+    public void fetchQuestionIDsFromDB(String quizID) throws SQLException{
         this.quizID = quizID;
         Statement statement = connectToDB();  
         ResultSet queryResult = statement.executeQuery("SELECT QUESTION_ID FROM APP.SELECTOR WHERE QUIZ_ID = " + quizID);
@@ -91,7 +91,7 @@ public class GameSessionModel{
         questionsID.remove(0);
     }
     
-    public ArrayList<SubjectDTO> getQuizSubjectFromDB() throws SQLException{
+    public ArrayList<SubjectDTO> getQuizSubjectsFromDB() throws SQLException{
         ArrayList<SubjectDTO> subjectList = new ArrayList<SubjectDTO>();
         Statement statement = connectToDB();  
         ResultSet queryResult = statement.executeQuery("SELECT ID, SUBJECT FROM APP.QUIZZES");
@@ -99,8 +99,11 @@ public class GameSessionModel{
         while (queryResult.next()) {
             String subjectText = queryResult.getString("SUBJECT");
             int subjectID = queryResult.getInt("ID");
+            
+            System.out.println("GameSModel: Create subject DTO");
             SubjectDTO subject = new SubjectDTO(subjectText, subjectID);
             subjectList.add(subject);
+            System.out.println("GameSModel: Subject DTO created and added");
         }
         return subjectList;
     }
