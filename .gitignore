@@ -11,3 +11,4 @@ password.txt
 **/nbproject
 **/test/
 **/build.xml
+**notThePassword.txt
