@@ -26,7 +26,7 @@
         </table>
         
         <ul>
-            <li> <a href="http://localhost:8080/mainView.jsp/">Home page (--NOT WORKING --)</a></li>
+            <li> <a href="http://localhost:8080/Lab5/mainView">Home page</a></li>
             <li> <a href="http://localhost:8080/Lab5/selectSubject">Quizzes</a></li> 
         </ul>
         
