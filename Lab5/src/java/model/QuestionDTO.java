@@ -4,11 +4,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Indiana Johan
  */
-public class QuestionDTO {
+public class QuestionDTO implements Serializable{
     private String text;
     private String[] options;
     private String[] correctAnswerIndexes;
