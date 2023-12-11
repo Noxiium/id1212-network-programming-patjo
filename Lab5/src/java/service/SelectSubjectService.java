@@ -1,6 +1,7 @@
 
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class SelectSubjectService {
     }
 
     
-    public List<SubjectDTO> getQuizSubjectsFromDB() {
-         List<SubjectDTO> subjectList = selectSubjectRepository.getQuizSubjectsFromDB();
+    public ArrayList<SubjectDTO> getQuizSubjectsFromDB() {
+         ArrayList<SubjectDTO> subjectList = selectSubjectRepository.getQuizSubjectsFromDB();
          
          return subjectList;
     }

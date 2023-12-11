@@ -18,11 +18,10 @@ import org.springframework.stereotype.Repository;
  *
  * @author patricialagerhult
  */
-
 @Repository
 public class SelectSubjectRepository {
-    
-      private final JdbcTemplate jdbcTemplate;
+
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public SelectSubjectRepository(JdbcTemplate jdbcTemplate) {
@@ -30,10 +29,15 @@ public class SelectSubjectRepository {
     }
 
     public ArrayList<SubjectDTO> getQuizSubjectsFromDB() {
-        ArrayList <SubjectDTO> subjectList;
-
-        return subjectList;
-       
+        List<SubjectDTO> subjectList = querySubjectsFromDB();
         
+        return new ArrayList<>(subjectList);
+    }
+
+    private List<SubjectDTO> querySubjectsFromDB() {
+        return jdbcTemplate.query(
+                "SELECT ID, SUBJECT FROM APP.QUIZZES",
+                (rs, rowNum) -> new SubjectDTO(rs.getString("SUBJECT"), rs.getInt("ID"))
+        );
     }
 }

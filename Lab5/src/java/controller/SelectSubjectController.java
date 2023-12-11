@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import model.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class SelectSubjectController {
 
     @GetMapping
     public String showQuizSubject(Model model) {
-        List<SubjectDTO> subjectList = selectSubjectService.getQuizSubjectsFromDB();
+        ArrayList<SubjectDTO> subjectList = selectSubjectService.getQuizSubjectsFromDB();
         model.addAttribute("subjectList", subjectList);
 
         return "selectSubjectView";
