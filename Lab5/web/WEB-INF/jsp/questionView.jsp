@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>The ultimate Quiz Game!</title>
-    <p> questionView (Alla frågor blir hämtade och printas ut i 'Apache Tomcat or TomEE terminalen)</p>
+    <p> questionView (Alla frågor blir hämtade och printas ut i 'Apache Tomcat or TomEE' terminalen)</p>
     </head>
     <body>
   
