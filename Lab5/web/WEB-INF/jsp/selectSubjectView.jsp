@@ -8,7 +8,7 @@
     <title>The ultimate Quiz Game!</title>
     <script>
         function toMainView() {
-            window.location.href = 'mainView.jsp';
+            window.location.href = 'mainView';
         }
     </script>
 </head>
