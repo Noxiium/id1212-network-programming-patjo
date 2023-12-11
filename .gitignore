@@ -2,6 +2,7 @@
 **/target/
 **/.DS_Store
 password.txt
+<<<<<<< HEAD
 /Lab4Part1/dist/
 /Lab4Part1/build/
 /Lab4Part1/nbproject
@@ -15,3 +16,14 @@ password.txt
 /Lab5/build/
 /Lab5/nbproject
 /Lab5/test/
+=======
+**/dist/
+**/build/
+**/nbproject
+**/test/
+**/dist/
+**/build/
+**/nbproject
+**/test/
+**/build.xml
+>>>>>>> 3a366df70fd9c29227e6e1408a5df389861be8ed
