@@ -48,7 +48,7 @@ public class QuestionController {
      */
     @ModelAttribute("questionIndex")
     public Integer initializeQuestionIndex() {
-        return 0; // Index 0 vid start
+        return 0; 
     }
 
     /**
