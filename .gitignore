@@ -7,3 +7,7 @@ password.txt
 /Lab4Part1/nbproject
 /Lab4Part1/test/
 **/build.xml
+/Lab4Part2/dist/
+/Lab4Part2/build/
+/Lab4Part2/nbproject
+/Lab4Part2/test/
