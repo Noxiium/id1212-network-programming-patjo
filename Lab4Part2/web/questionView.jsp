@@ -14,7 +14,7 @@
         <title>The ultimate Quiz Game!</title>
     </head>
     <body>
-        <h1><%= request.getAttribute("text") %></h1>
+        <h1>${currentQuestion.getText()}</h1>
 
 
         <form action="QuestionServlet" method="get">
