@@ -15,7 +15,7 @@
 <body>
     <h1>Select a subject</h1>
 
-    <form action="SelectSubjectServlet" method="get">
+    <form action="questionView" method="get">
         <c:forEach var="element" items="${subjectList}">
             <label>
                 <input type="radio" name="selectedSubject" value="${element.subjectID}">
