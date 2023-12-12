@@ -1,7 +1,9 @@
 package repository;
 
+import java.sql.ResultSet;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,18 +17,29 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void handleUserLogin(){
-        
+    public void handleUserLogin() {
+
     }
-    
+
     public void saveUser(User user) {
         String sql = "INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
         jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
     }
 
-    public void fetchUserID(User user) {
+    public Integer fetchUserID(User user) {
         String query = "SELECT ID FROM APP.USERS WHERE USERNAME = ? AND PASSWORD = ?";
-        user.setId(jdbcTemplate.queryForObject(query, Integer.class, user.getUsername(), user.getPassword()));
+        return jdbcTemplate.queryForObject(query, Integer.class, user.getUsername(), user.getPassword());
+    }
+
+    public Integer checkIfUserExistInDB(User user) {
+        String query = "SELECT ID FROM APP.USERS WHERE USERNAME = ?";
+        try {
+            Integer userId = jdbcTemplate.queryForObject(query, Integer.class, user.getUsername());
+            return userId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; 
+        }
     }
 
 }
