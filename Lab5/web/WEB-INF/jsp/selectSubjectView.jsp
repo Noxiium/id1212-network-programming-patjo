@@ -10,12 +10,28 @@
         function toMainView() {
             window.location.href = 'mainView';
         }
+        
+        function validateForm() {
+            var radios = document.getElementsByName('selectedSubject');
+            var checked = false;
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    checked = true;
+                    break;
+                }
+            }
+            if (!checked) {
+                alert('Please select a subject!');
+                return false; // Prevent form submission if no subject is selected
+            }
+            return true; // Proceed with form submission
+        }
     </script>
 </head>
 <body>
     <h1>Select a subject</h1>
 
-    <form action="questionView" method="get">
+    <form action="questionView" method="get" onsubmit="return validateForm()">
         <c:forEach var="element" items="${subjectList}">
             <label>
                 <input type="radio" name="selectedSubject" value="${element.subjectID}">
