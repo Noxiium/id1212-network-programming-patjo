@@ -1,15 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 import model.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import org.springframework.ui.Model;
 import repository.GameHandlerRepository;
 
 /**
@@ -17,13 +14,36 @@ import repository.GameHandlerRepository;
  * @author Indiana Johan
  */
 @Service
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class GameHandlerService {
-    
-    private GameHandlerRepository questionRepository;
+    private GameHandlerRepository gameHandlerRepository;
+    private ArrayList<QuestionDTO> questionList;
+    private int questionIndex;
+    private int score;
     
     @Autowired
     public GameHandlerService(GameHandlerRepository questionRepository) {
-        this.questionRepository = questionRepository;
+        this.gameHandlerRepository = questionRepository;
+    }
+    
+    public void initializeQuiz(int quizId){
+        this.questionList = getAllQuestionsFromDB(quizId);
+        this.questionIndex = 0;
+        this.score = 0;
+    }
+    
+    public QuestionDTO getNextQuestion()throws IndexOutOfBoundsException{
+        QuestionDTO question = questionList.get(questionIndex);
+        questionIndex++;
+        return question;
+    }
+    
+    public void checkUserAnswer(List<String> userAnswer){
+        for(int i = 0; i < 3; i++){      
+            if(!(userAnswer.get(i).equals(questionList.get(questionIndex-1).getCorrectAnswerIndexes()[i])))
+                return;
+        }
+        this.score += 2;
     }
 
     /**
@@ -31,16 +51,13 @@ public class GameHandlerService {
     *
     * @return the list of all results from the database
     */
-    public ArrayList<QuestionDTO> getAllQuestionsFromDB(int quizID){
-        ArrayList<QuestionDTO> questionList = questionRepository.getAllQuestionsFromDB(quizID);
+    private ArrayList<QuestionDTO> getAllQuestionsFromDB(int quizId){
+        this.questionList = gameHandlerRepository.getAllQuestionsFromDB(quizId);
         return questionList;
     }
-
-    public void updateAttributeFirstQuestion(Model model,ArrayList<QuestionDTO> questionList, Integer questionIndex) {
-       
-            QuestionDTO currentQuestion = questionList.get(questionIndex);
-            model.addAttribute("currentQuestion", currentQuestion);
-            model.addAttribute("questionList", questionList);
-            model.addAttribute("questionIndex", 0);
+    
+    public int getScore(){
+        return this.score;
     }
+
 }

@@ -12,7 +12,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>The ultimate Quiz Game!</title>
-    <p> questionView (Alla frågor blir hämtade och printas ut i 'Apache Tomcat or TomEE' terminalen)</p>
 </head>
 <body>
 
@@ -20,19 +19,19 @@
     <h1>${currentQuestion.getText()}</h1>
 
 
-    <form action="" method="get">
+    <form action="" method="post">
         <p>
-            <input type="checkbox" name="selectedOptions" value="${currentQuestion.options[0]}" id="option0" />
+            <input type="checkbox" name="selectedOptions0" value="true" id="option0" />
             <label for="option0">${currentQuestion.options[0]}</label>
         </p>
 
         <p>
-            <input type="checkbox" name="selectedOptions" value="${currentQuestion.options[1]}" id="option1" />
+            <input type="checkbox" name="selectedOptions1" value="true" id="option1" />
             <label for="option1">${currentQuestion.options[1]}</label>
         </p>
 
         <p>
-            <input type="checkbox" name="selectedOptions" value="${currentQuestion.options[2]}" id="option2" />
+            <input type="checkbox" name="selectedOptions2" value="true" id="option2" />
             <label for="option2">${currentQuestion.options[2]}</label>
         </p>
 

@@ -13,7 +13,8 @@
     </head>
     <body>
         <h1>Quiz Complete!</h1>
-        <form action="questionView" method="post">
+        <p> Your score is: ${score} </p>
+        <form action="mainView" method="get">
 
             <button type="submit">Main View</button>
         </form>
