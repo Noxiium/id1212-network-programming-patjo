@@ -18,10 +18,7 @@ public class UserService {
     
     @Transactional
     public void saveUser(User user) {
-        // Lägg till eventuell affärslogik här innan du anropar repository
-  
         userRepository.saveUser(user);
     }
 
-    // Andra metoder
 }
