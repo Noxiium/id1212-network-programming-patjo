@@ -65,4 +65,9 @@ public class GameHandlerService {
         return this.score;
     }
 
+    public void sendResultToUser(String username, int score) {
+        MailSender mailSender = new MailSender();
+        mailSender.sendMail(username, score);
+    }
+
 }
