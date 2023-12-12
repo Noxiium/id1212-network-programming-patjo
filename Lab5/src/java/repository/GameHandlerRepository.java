@@ -21,12 +21,12 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class QuestionRepository {
+public class GameHandlerRepository {
     
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public QuestionRepository(JdbcTemplate jdbcTemplate) {
+    public GameHandlerRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
     

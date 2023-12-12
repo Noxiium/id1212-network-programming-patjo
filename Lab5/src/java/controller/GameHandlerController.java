@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import service.QuestionService;
+import service.GameHandlerService;
 
 /**
  * Controller class to handle requests related to Quiz question. Fetches
@@ -22,12 +22,12 @@ import service.QuestionService;
 @Controller
 @RequestMapping("/questionView")
 @SessionAttributes({"questionIndex", "questionList"})
-public class QuestionController {
+public class GameHandlerController {
 
-    private final QuestionService questionService;
+    private final GameHandlerService questionService;
 
     @Autowired
-    public QuestionController(QuestionService questionService) {
+    public GameHandlerController(GameHandlerService questionService) {
         this.questionService = questionService;
     }
 
@@ -68,15 +68,15 @@ public class QuestionController {
 
         System.out.println("GET - showQuestion");
 
+        
+      
         if (selectedSubjectId != null) {
-
+            
             // Load questions from the database for the selected subject
             questionList = questionService.getAllQuestionsFromDB(selectedSubjectId);
 
-            QuestionDTO currentQuestion = questionList.get(questionIndex);
-            model.addAttribute("currentQuestion", currentQuestion);
-            model.addAttribute("questionList", questionList);
-            model.addAttribute("questionIndex", 0);
+            questionService.updateAttributeFirstQuestion(model,questionList, questionIndex);
+           
         } else {
             // Increase index to determine what question will be displayed next
             questionIndex++;

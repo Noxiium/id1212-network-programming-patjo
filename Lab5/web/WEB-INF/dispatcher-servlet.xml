@@ -23,5 +23,5 @@
     <bean name="resultController" class="controller.ResultController" />
     <bean name="selectSubjectController" class="controller.SelectSubjectController" />
     <bean name="mainViewController" class="controller.MainViewController" />
-    <bean name="questionController" class="controller.QuestionController" />
+    <bean name="gameHandlerController" class="controller.GameHandlerController" />
 </beans>
