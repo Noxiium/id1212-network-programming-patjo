@@ -23,19 +23,17 @@ public class LoginController {
     }
 
     @GetMapping
-    public String processLoginForm(Model model) {
+    public String showLoginForm(Model model) {
         model.addAttribute("user", new User());
-        System.out.println("GET - method");
+    
         return "loginView";
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
-        System.out.println("POST-method");
-
-        userService.saveUser(user);
-
-        model.addAttribute("username", user.getUsername());
+    public String handleUserLogin(@ModelAttribute("user") User user, Model model, HttpSession session) {
+    
+        userService.handleUserLogin(user);
+      
         session.setAttribute("username", user.getUsername());
         session.setAttribute("userId", user.getId());
         return "mainView";
