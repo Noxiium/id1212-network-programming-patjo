@@ -22,11 +22,11 @@ import service.GameHandlerService;
 @RequestMapping("/questionView")
 public class GameHandlerController {
 
-    private final GameHandlerService questionService;
+    private final GameHandlerService gameHandlerService;
 
     @Autowired
     public GameHandlerController(GameHandlerService questionService) {
-        this.questionService = questionService;
+        this.gameHandlerService = questionService;
     }
 
     @GetMapping
@@ -35,8 +35,8 @@ public class GameHandlerController {
         
    
         session.setAttribute("quizId", selectedSubjectId);
-        questionService.initializeQuiz(selectedSubjectId);
-        QuestionDTO question = questionService.getNextQuestion();
+        gameHandlerService.initializeQuiz(selectedSubjectId);
+        QuestionDTO question = gameHandlerService.getNextQuestion();
         model.addAttribute("currentQuestion", question);
         
         String userName = (String) session.getAttribute("username");
@@ -59,19 +59,22 @@ public class GameHandlerController {
         selectedOptions.add(0, ((selectedOptions0 != null) ? selectedOptions0 : "null"));
         selectedOptions.add(1, ((selectedOptions1 != null) ? selectedOptions1 : "null"));
         selectedOptions.add(2, ((selectedOptions2 != null) ? selectedOptions2 : "null"));
-        questionService.checkUserAnswer(selectedOptions);
+        gameHandlerService.checkUserAnswer(selectedOptions);
         try {
-            QuestionDTO question = questionService.getNextQuestion();
+            QuestionDTO question = gameHandlerService.getNextQuestion();
             model.addAttribute("currentQuestion", question);
             return "questionView";
         } catch (IndexOutOfBoundsException e) {
-            int score = questionService.getScore();
+            int score = gameHandlerService.getScore();
             int userId = (int) session.getAttribute("userId");
             int quizId = (int) session.getAttribute("quizId");
             
             System.out.println("----- SCORE : " + score);
-            questionService.insertResultIntoDB(userId, quizId, score);
+            gameHandlerService.insertResultIntoDB(userId, quizId, score);
             model.addAttribute("score", score);
+            
+            
+            gameHandlerService.sendResultToUser((String)session.getAttribute("username"), score);
             return "quizCompleteView";
         }
     }
