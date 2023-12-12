@@ -15,6 +15,10 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public void handleUserLogin(){
+        
+    }
+    
     public void saveUser(User user) {
         String sql = "INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
         jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
