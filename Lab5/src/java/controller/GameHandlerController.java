@@ -32,6 +32,8 @@ public class GameHandlerController {
     @GetMapping
     public String initializeQuiz(Model model, HttpSession session, 
             @RequestParam(name = "selectedSubject", required = false) Integer selectedSubjectId) {
+        
+   
         session.setAttribute("quizId", selectedSubjectId);
         questionService.initializeQuiz(selectedSubjectId);
         QuestionDTO question = questionService.getNextQuestion();
@@ -44,6 +46,7 @@ public class GameHandlerController {
 
 
         return "questionView";
+    
     }
 
     @PostMapping
@@ -65,6 +68,8 @@ public class GameHandlerController {
             int score = questionService.getScore();
             int userId = (int) session.getAttribute("userId");
             int quizId = (int) session.getAttribute("quizId");
+            
+            System.out.println("----- SCORE : " + score);
             questionService.insertResultIntoDB(userId, quizId, score);
             model.addAttribute("score", score);
             return "quizCompleteView";
