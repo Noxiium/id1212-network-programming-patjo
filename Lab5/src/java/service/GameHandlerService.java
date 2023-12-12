@@ -36,6 +36,7 @@ public class GameHandlerService {
         QuestionDTO question = questionList.get(questionIndex);
         questionIndex++;
         return question;
+        
     }
     
     public void checkUserAnswer(List<String> userAnswer){
@@ -44,6 +45,10 @@ public class GameHandlerService {
                 return;
         }
         this.score += 2;
+    }
+    
+    public void insertResultIntoDB(int userId, int quizId, int score){
+        gameHandlerRepository.insertResultIntoDB(userId, quizId, score);
     }
 
     /**

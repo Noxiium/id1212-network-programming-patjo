@@ -18,7 +18,11 @@ public class UserRepository {
     public void saveUser(User user) {
         String sql = "INSERT INTO APP.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
         jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
-        
+    }
+
+    public void fetchUserID(User user) {
+        String query = "SELECT ID FROM APP.USERS WHERE USERNAME = ? AND PASSWORD = ?";
+        user.setId(jdbcTemplate.queryForObject(query, Integer.class, user.getUsername(), user.getPassword()));
     }
 
 }

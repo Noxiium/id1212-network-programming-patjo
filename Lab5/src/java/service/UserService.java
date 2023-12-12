@@ -1,5 +1,6 @@
 package service;
 
+import javax.websocket.Session;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class UserService {
     @Transactional
     public void saveUser(User user) {
         userRepository.saveUser(user);
+        userRepository.fetchUserID(user);
     }
 
 }

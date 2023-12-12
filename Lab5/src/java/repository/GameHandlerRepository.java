@@ -26,6 +26,10 @@ public class GameHandlerRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
     
+    public void insertResultIntoDB(int userId, int QuizId, int score){
+        String query = "INSERT INTO APP.RESULTS (USER_ID, QUIZ_ID, SCORE) VALUES (?, ?,?)";
+        jdbcTemplate.update(query, userId, QuizId, score);
+    }
 
     public ArrayList<QuestionDTO> getAllQuestionsFromDB(int quizID){
         List<QuestionDTO> questionList = queryQuestionsFromDB(quizID);
@@ -44,4 +48,6 @@ public class GameHandlerRepository {
             rs.getString("ANSWER")
         ));
     }
+    
+    
 }
