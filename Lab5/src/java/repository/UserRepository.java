@@ -1,9 +1,7 @@
 package repository;
 
-import java.sql.ResultSet;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -37,7 +35,6 @@ public class UserRepository {
             Integer userId = jdbcTemplate.queryForObject(query, Integer.class, user.getUsername());
             return userId;
         } catch (Exception e) {
-            e.printStackTrace();
             return -1; 
         }
     }
