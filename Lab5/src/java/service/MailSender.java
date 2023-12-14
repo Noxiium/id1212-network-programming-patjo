@@ -28,6 +28,12 @@ public class MailSender {
         }
     }
 
+    /**
+     * Sends an email containing the quiz game result to the specified user.
+     *
+     * @param  username  the email address of the recipient
+     * @param  score     the score achieved by the user in the quiz game
+     */
     public void sendMail(String username, int score) {
 
       

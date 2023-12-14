@@ -6,10 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.SelectSubjectRepository;
 
-/**
- *
- * @author patricialagerhult
- */
 @Service
 public class SelectSubjectService {
     
@@ -21,6 +17,11 @@ public class SelectSubjectService {
     }
 
     
+    /**
+     * Retrieves a list of quiz subjects from the database.
+     *
+     * @return  An ArrayList of SubjectDTO objects representing the quiz subjects.
+     */
     public ArrayList<SubjectDTO> getQuizSubjectsFromDB() {
          ArrayList<SubjectDTO> subjectList = selectSubjectRepository.getQuizSubjectsFromDB();
          

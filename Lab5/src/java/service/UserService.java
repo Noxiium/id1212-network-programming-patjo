@@ -16,6 +16,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Saves a User object to the database.
+     *
+     * @param  user  the User object to be saved
+     */
     @Transactional
     public void saveUser(User user) {
         userRepository.saveUser(user);
@@ -26,6 +31,14 @@ public class UserService {
 
     }
 
+    /**
+     * Handles the user login by checking if the user exists in the database.
+     * If the user does not exist, it saves the user to the database.
+     * If the user exists, it updates the user objects ID.
+     *
+     * @param  user  the user object containing the user data
+     * @return       void
+     */
     public void handleUserLogin(User user) {
 
         Integer userId = userRepository.checkIfUserExistInDB(user);
