@@ -19,11 +19,23 @@ public class QuestionDTO implements Serializable{
     }
 
 
+    /**
+     * Converts the given DB representation string into a string array.
+     *
+     * @param  DBString  the DB representation string to be converted
+     * @return           the resulting string array
+     */
     private String[] convertDBRepresentationToStringArray(String DBString){
         String[] StringArray = DBString.split("/");
         return StringArray;
     }
 
+    /**
+     * Changes the format of the correct answer indexes from 1 & 0 to true & null
+     *
+     * @param  None  This function does not take any parameters.
+     * @return       This function does not return any value.
+     */
     private void changeCorrectAnswerFormat(){
         for(int i = 0; i < 3; i++){
             if (this.correctAnswerIndexes[i].equals("1")){
