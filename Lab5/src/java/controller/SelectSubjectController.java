@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import service.SelectSubjectService;
 
-/**
- *
- * @author patricialagerhult
- */
 @Controller
 @RequestMapping("/selectSubject")
 public class SelectSubjectController {
@@ -25,6 +21,12 @@ public class SelectSubjectController {
         this.selectSubjectService = selectSubjectService;
     }
 
+    /**
+     * Retrieves the list of quiz subjects from the database and adds it to the model.
+     *
+     * @param  model  the model to which the list of quiz subjects is added
+     * @return        the name of the view that should be rendered
+     */
     @GetMapping
     public String showQuizSubject(Model model) {
         ArrayList<SubjectDTO> subjectList = selectSubjectService.getQuizSubjectsFromDB();

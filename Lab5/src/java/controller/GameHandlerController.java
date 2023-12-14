@@ -29,6 +29,14 @@ public class GameHandlerController {
         this.gameHandlerService = questionService;
     }
 
+    /**
+     * Initializes the quiz and retrieves the next question.
+     *
+     * @param  model                   the model object for the view
+     * @param  session                 the HttpSession object
+     * @param  selectedSubjectId       the ID of the selected subject (optional)
+     * @return                         the name of the view to render
+     */
     @GetMapping
     public String initializeQuiz(Model model, HttpSession session, 
             @RequestParam(name = "selectedSubject", required = false) Integer selectedSubjectId) {
@@ -49,6 +57,17 @@ public class GameHandlerController {
     
     }
 
+    /**
+     * Retrieves the next question and displays it in the question view.
+     *
+     * @param  model                  the model object to hold attributes for the view
+     * @param  session                the HttpSession object for session management
+     * @param  selectedOptions0       the value of selectedOptions0 parameter (optional)
+     * @param  selectedOptions1       the value of selectedOptions1 parameter (optional)
+     * @param  selectedOptions2       the value of selectedOptions2 parameter (optional)
+     * @return                        the name of the question view template
+     * @throws IndexOutOfBoundsException if there are no more questions available
+     */
     @PostMapping
     public String getNextQuestion(Model model, HttpSession session,
             @RequestParam(name = "selectedOptions0", required = false) String selectedOptions0,
@@ -69,7 +88,6 @@ public class GameHandlerController {
             int userId = (int) session.getAttribute("userId");
             int quizId = (int) session.getAttribute("quizId");
             
-            System.out.println("----- SCORE : " + score);
             gameHandlerService.insertResultIntoDB(userId, quizId, score);
             model.addAttribute("score", score);
             

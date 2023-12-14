@@ -29,6 +29,14 @@ public class LoginController {
         return "loginView";
     }
 
+    /**
+     * Handles user login.
+     *
+     * @param  user    the user object containing user information
+     * @param  model   the model object for storing and retrieving data
+     * @param  session the session object for managing user sessions
+     * @return         the name of the main view page
+     */
     @PostMapping
     public String handleUserLogin(@ModelAttribute("user") User user, Model model, HttpSession session) {
     
