@@ -7,10 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author patricialagerhult
- */
 @Repository
 public class SelectSubjectRepository {
 
@@ -21,12 +17,22 @@ public class SelectSubjectRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Retrieves the quiz subjects from the database.
+     *
+     * @return  an ArrayList of SubjectDTO objects representing the quiz subjects
+     */
     public ArrayList<SubjectDTO> getQuizSubjectsFromDB() {
         List<SubjectDTO> subjectList = querySubjectsFromDB();
         
         return new ArrayList<>(subjectList);
     }
 
+    /**
+     * Queries the database to retrieve a list of SubjectDTO objects.
+     *
+     * @return           a list of SubjectDTO objects containing the subject and ID
+     */
     private List<SubjectDTO> querySubjectsFromDB() {
         return jdbcTemplate.query(
                 "SELECT ID, SUBJECT FROM APP.QUIZZES",
